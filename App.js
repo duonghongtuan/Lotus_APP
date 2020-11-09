@@ -1,35 +1,15 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Octicon from 'react-native-vector-icons/Octicons'
-import HomeScreen from './components/home/home'
-import Search from './components/search/search'
+import Entyicon from 'react-native-vector-icons/Entypo'
+import Video from './components/video/video'
 import Notifications from './components/notification/notification'
 import CreatePost from './components/home/creatPost'
 import Menu from './components/menu/menu.js';
-import { color } from 'react-native-reanimated';
-
-const HomeStack = createStackNavigator();
-
-function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen name="Lotus" component={HomeScreen}
-      options={{
-        title:"Lotus",
-        headerTintColor: "#FF00FF",
-        headerTitleStyle: {
-          fontWeight: 'bold',
-          fontStyle: 'italic'
-        },
-      }}
-      />
-    </HomeStack.Navigator>
-  );
-}
+import HomeStackScreen from './components/navigation/homeNavi'
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +18,7 @@ function MyTabs() {
     <Tab.Navigator
       initialRouteName="HomeScreen"
       tabBarOptions={{
-        activeTintColor: 'red',
+        activeTintColor: '#f1538e',
       }}
     >
       <Tab.Screen
@@ -52,12 +32,12 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Search}
+        name="Video"
+        component={Video}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search" color={color} size={size} />
+            <Entyicon name="folder-video" color={color} size={size} />
           ),
         }}
       />

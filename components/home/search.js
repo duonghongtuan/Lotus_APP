@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { SearchBar } from 'react-native-elements';
 
-export default class Search extends Component {
+export default class SearchHome extends Component {
   state = {
     search: '',
   };
