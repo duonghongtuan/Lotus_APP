@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { View, Text } from 'react-native';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -9,7 +11,19 @@ import Video from './components/video/video'
 import Notifications from './components/notification/notification'
 import CreatePost from './components/home/creatPost'
 import Menu from './components/menu/menu.js';
-import HomeStackScreen from './components/navigation/homeNavi'
+import HomeStackScreen from './components/navigation/homeNavi';
+import Login from './components/login/login.js';
+import Create from './components/login/create.js';
+
+// const App = () => {
+//   return (
+//     <View>
+//       <Create/>
+//     </View>
+//   )
+// }
+
+// export default App;
 
 const Tab = createBottomTabNavigator();
 
