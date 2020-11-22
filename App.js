@@ -1,29 +1,21 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
-
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Octicon from 'react-native-vector-icons/Octicons'
 import Entyicon from 'react-native-vector-icons/Entypo'
-import Video from './components/video/video'
 import Notifications from './components/notification/notification'
 import CreatePost from './components/home/creatPost'
 import Menu from './components/menu/menu.js';
 import HomeStackScreen from './components/navigation/homeNavi';
-import Login from './components/login/login.js';
-import Create from './components/login/create.js';
+import LoginStackScreen from './components/navigation/loginNavi';
+import Videos from './components/video/video';
+import VideoStackScreen from './components/navigation/videoNavi';
+import NotiStackScreen from './components/navigation/notificationNavi';
+import MenuStackScreen from './components/navigation/menuNavi';
 
-// const App = () => {
-//   return (
-//     <View>
-//       <Create/>
-//     </View>
-//   )
-// }
-
-// export default App;
 
 const Tab = createBottomTabNavigator();
 
@@ -47,7 +39,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Video"
-        component={Video}
+        component={VideoStackScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
@@ -67,7 +59,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Notifications"
-        component={Notifications}
+        component={NotiStackScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
@@ -78,7 +70,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Menu"
-        component={Menu}
+        component={MenuStackScreen}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
@@ -89,10 +81,15 @@ function MyTabs() {
     </Tab.Navigator>
   );
 }
+
+const rootStack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <MyTabs />
+      <rootStack.Navigator headerMode="none">
+        <rootStack.Screen name="Login" component={LoginStackScreen} />
+        <rootStack.Screen name="MainTab" component={MyTabs} />
+      </rootStack.Navigator>
     </NavigationContainer>
   );
 }

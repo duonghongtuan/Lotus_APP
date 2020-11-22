@@ -8,10 +8,12 @@ import {
     Button,
     TextInput
 } from 'react-native';
+import { useNavigation} from '@react-navigation/native'
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("")
+    const navigation = useNavigation()
 
     return (
         <View >
@@ -39,11 +41,14 @@ const Login = () => {
                     <Button
                         color="#de457d"
                         title="LOGIN"
+                        onPress={() => navigation.navigate('MainTab')}
                     />
                 </View>
             </View>
             <View style={styles.fixToText}>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Register')}
+                >
                     <Text>Chưa có tài khoản</Text>
                 </TouchableOpacity>
                 <Text>Quên mật khẩu</Text>

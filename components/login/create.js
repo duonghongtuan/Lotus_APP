@@ -9,9 +9,10 @@ import {
     View,
     ScrollView,
 } from 'react-native';
-
+import { useNavigation} from '@react-navigation/native'
 
 const Create = () => {
+    const navigation = useNavigation()
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -52,7 +53,9 @@ const Create = () => {
 
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                     <Text style={{ paddingRight: 10 }}>Đã có tài khoản</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Login')}
+                    >
                         <Text style={{ fontWeight: 'bold' }}>Đăng nhập</Text>
                     </TouchableOpacity>
                 </View>

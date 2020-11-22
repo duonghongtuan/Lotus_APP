@@ -14,17 +14,10 @@ function LogoTitle() {
     return (
         <View style={{ flexDirection: "row" }}>
             <Image
-                style={{ width: 50, height: 50, borderRadius: 25 }}
-                source={require('../images/logo.png')}
+                style={{ width: 150, height: 40 }}
+                resizeMode="contain"
+                source={require('../images/logo_brand_ngang.jpg')}
             />
-            <Text style={{
-                fontWeight: 'bold', marginLeft: 10,
-                fontStyle: 'italic',
-                fontSize: 30,
-                color: '#f1538e'
-            }}>
-                Lotus
-            </Text>
         </View>
     );
 }
@@ -35,10 +28,12 @@ const HomeStack = createStackNavigator();
 export default function HomeStackScreen() {
     const navigation = useNavigation()
     return (
-        <HomeStack.Navigator>
+        <HomeStack.Navigator initialRouteName="Lotus">
+        
             <HomeStack.Screen name="Lotus"
                 component={HomeScreen}
                 options={{
+                    headerLeft: null,
                     headerTitle: <LogoTitle />,
                     headerRight: () => (
                         <HeaderButtons>
