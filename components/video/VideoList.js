@@ -4,26 +4,41 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  Slider,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
+import Slider from '@react-native-community/slider'
 import Video from 'react-native-video'; /// alreadyimported this
 import Icon from 'react-native-vector-icons/FontAwesome5'; // and this
+import IconAnt from 'react-native-vector-icons/AntDesign'
+import Octicon from 'react-native-vector-icons/Octicons'
 import Orientation from 'react-native-orientation';
+import Feather from 'react-native-vector-icons/Feather'
 
 const { width } = Dimensions.get('window');
 const samplevideo = require('./sample.mp4');
 
 export default class VideoList extends React.Component {
-  constructor(p) {
-    super(p);
+  constructor(props) {
+    super(props);
     this.state = {
       currentTime: 0,
       duration: 0.1,
-      paused: false,
+      paused: true,
       overlay: false,
-      fullscreen: false
+      fullscreen: false,
+      like: true,
+      color: '#777777'
     };
+  }
+  onChange() {
+    this.setState({ like: !this.state.like })
+    if (this.state.like === true) {
+      this.setState({ color: "#0000FF" })
+    } else {
+      this.setState({ color: "#777777" })
+    }
   }
 
   lastTap = null;
@@ -94,20 +109,34 @@ export default class VideoList extends React.Component {
 
   fullscreen = () => {
     const { fullscreen } = this.state;
-    if(fullscreen) {
+    if (fullscreen) {
       Orientation.lockToPortrait();
     } else {
       Orientation.lockToLandscape();
     }
     this.setState({ fullscreen: !fullscreen });
   }
-  
+
 
   render = () => {
     const { currentTime, duration, paused, overlay, fullscreen } = this.state;
+    const { item } = this.props
     return (
-      <View style={style.container}>
-        <View style={fullscreen ? style.fullscreenVideo : style.video}>
+      <View style={styles.container}>
+        <View style={styles.user}>
+          <View style={{ flex: 4, flexDirection: 'row' }}>
+            <View style={styles.avatar}>
+              <Image style={styles.imageAvater} source={{ uri: item.avatar }} />
+            </View>
+            <Text style={styles.username}>
+              {item.username}
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.edit}>
+            <Feather name="more-horizontal" size={30} />
+          </TouchableOpacity>
+        </View>
+        <View style={fullscreen ? styles.fullscreenVideo : styles.video}>
           <Video
             fullscreen={fullscreen}
             paused={paused} // this will manage the pause and play
@@ -119,14 +148,14 @@ export default class VideoList extends React.Component {
             onProgress={this.progress}
           // onVideoEnd={this.onEndVideo}
           />
-          <View style={style.overlay}>
+          <View style={styles.overlay}>
             {/* now we can remove this not */}
-            {overlay ? <View style={{ ...style.overlaySet, backgroundColor: '#0006' }}>
-              <Icon name='backward' style={style.icon} onPress={this.backward} />
-              <Icon name={paused ? 'play' : 'pause'} style={style.icon} onPress={() => this.setState({ paused: !paused })} />
-              <Icon name='forward' style={style.icon} onPress={this.forward} />
-              <View style={style.sliderCont}>
-                <View style={style.timer}>
+            {overlay ? <View style={{ ...styles.overlaySet, backgroundColor: '#0006' }}>
+              <Icon name='backward' style={styles.icon} onPress={this.backward} />
+              <Icon name={paused ? 'play' : 'pause'} style={styles.icon} onPress={() => this.setState({ paused: !paused })} />
+              <Icon name='forward' style={styles.icon} onPress={this.forward} />
+              <View style={styles.sliderCont}>
+                <View style={styles.timer}>
                   <Text style={{ color: 'white' }}>{this.getTime(currentTime)}</Text>
                   <Text style={{ color: 'white' }}>{this.getTime(duration)}   <Icon onPress={this.fullscreen} name={fullscreen ? 'compress' : 'expand'} style={{ fontSize: 15 }} /></Text>
                 </View>
@@ -136,21 +165,40 @@ export default class VideoList extends React.Component {
                   minimumTrackTintColor='white'
                   thumbTintColor='white' // now the slider and the time will work
                   value={currentTime / duration} // slier input is 0 - 1 only so we want to convert sec to 0 - 1
-                  onValueChange={this.onslide} 
+                  onValueChange={this.onslide}
                 />
               </View>
-            </View> : <View style={style.overlaySet}>
+            </View> : <View style={styles.overlaySet}>
                 <TouchableNativeFeedback onPress={this.youtubeSeekLeft}><View style={{ flex: 1 }} /></TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.youtubeSeekRight}><View style={{ flex: 1 }} /></TouchableNativeFeedback>
               </View>}
           </View>
+        </View>
+        <View style={styles.total}>
+          <IconAnt name="like2" size={30} color="#f1538e" />
+          <Text style={{ fontSize: 18 }}>{item.totalLike}</Text>
+          <Text style={{ fontSize: 18, marginLeft: 200 }}>0 bình luận</Text>
+        </View>
+        <View style={styles.postBottom}>
+          <TouchableOpacity onPress={this.onChange.bind(this)}>
+            <View style={styles.like}>
+              <IconAnt name="like1" size={30} style={{ color: this.state.color }} />
+              <Text style={{ fontSize: 17, marginLeft: 10, color: this.state.color }}>Thích</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity  >
+            <View style={styles.like}>
+              <Octicon name="comment" size={30} />
+              <Text style={{ fontSize: 17, marginLeft: 10, color: "#777777" }}>Bình luận</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center'
@@ -186,5 +234,63 @@ const style = StyleSheet.create({
     backgroundColor: 'black',
     ...StyleSheet.absoluteFill,
     elevation: 1
+  },
+  user: {
+    marginTop: 20,
+    flex: 2,
+    flexDirection: "row",
+    marginBottom: 10
+  },
+  username: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginLeft: 10,
+  },
+  imageAvater: {
+    marginLeft: 10,
+    width: 50,
+    height: 50,
+    borderRadius: 25
+  },
+  avatar: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  edit: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  post: {
+    padding: 20,
+    fontSize: 17
+  },
+  imagePost: {
+    height: 200
+  },
+  total: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 30,
+    borderTopWidth: 1,
+    borderTopColor: '#BBBBBB',
+    marginTop: 5,
+  },
+  postBottom: {
+    flexDirection: 'row',
+    marginTop: 5,
+    padding: 2,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: '#BBBBBB',
+    borderBottomColor: '#BBBBBB'
+  },
+  like: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: "80%",
+    justifyContent: 'center',
   }
+
 });

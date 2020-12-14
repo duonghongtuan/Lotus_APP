@@ -6,12 +6,9 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Octicon from 'react-native-vector-icons/Octicons'
 import Entyicon from 'react-native-vector-icons/Entypo'
-import Notifications from './components/notification/notification'
 import CreatePost from './components/home/creatPost'
-import Menu from './components/menu/menu.js';
 import HomeStackScreen from './components/navigation/homeNavi';
 import LoginStackScreen from './components/navigation/loginNavi';
-import Videos from './components/video/video';
 import VideoStackScreen from './components/navigation/videoNavi';
 import NotiStackScreen from './components/navigation/notificationNavi';
 import MenuStackScreen from './components/navigation/menuNavi';

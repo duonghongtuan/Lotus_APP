@@ -9,6 +9,7 @@ import {
 import pick from '../api/picker.js'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import UserPost from './userpost.js'
 
 
 export default class CreatePost extends Component {
@@ -34,33 +35,9 @@ export default class CreatePost extends Component {
             />
         return (
             <View style={styles.container}>
-                <View style={styles.userpost}>
-                    <View style={styles.avatar}>
-                        <Image style={styles.imageAvater} source={require('../images/user.png')} />
-                    </View>
-                    <View>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30 }}>
-                            No Name
-                        </Text>
-                        <Text>Công khai</Text>
-                    </View>
-                </View>
-                <View style={styles.writepost}>
-                    <TextInput
-                        placeholder="Bạn đang nghĩ gì?"
-                        multiline={true}
-                        onChangeText={text => {
-                            this.setState(() => {
-                                return {
-                                    text: text
-                                }
-                            })
-                        }}
-                    />
+                <UserPost />
                     {img}
-                </View>
                 <View style={styles.listpost}>
-
                     <Modal
                         transparent={true}
                         visible={this.state.modalVisible}
@@ -111,20 +88,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         width: "100%",
         height: "100%"
-    },
-    userpost: {
-        flex: 2,
-        flexDirection: "row"
-    },
-    imageAvater: {
-        width: 80,
-        height: 80,
-        borderRadius: 40
-    },
-    avatar: {
-        width: "30%",
-        alignItems: "center",
-        justifyContent: "center"
     },
     writepost: {
         flex: 4,

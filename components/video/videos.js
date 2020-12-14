@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
-import { Text, View, Button, StyleSheet } from 'react-native'
-import VideoList from './video'
+import {
+    Text, View, Button, StyleSheet,
+    ScrollView, SafeAreaView
+} from 'react-native'
+import VideoList from './VideoList'
+import DATA from '../posts/data'
 
 
 export default class Videos extends Component {
     render() {
         return (
-            <View style={styles.container}>
-                <VideoList />
-            </View>
+            <SafeAreaView style={styles.container}>
+                <ScrollView>
+                    {DATA.map((item, index) => (
+                        <VideoList item={item} key={index} />
+                    ))}
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }
