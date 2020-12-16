@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import { HeaderButtons } from 'react-navigation-header-buttons'
 import SearchHome from '../home/search'
 import { useNavigation} from '@react-navigation/native'
+import Profile from '../profile/profile';
  
 
 
@@ -57,6 +58,9 @@ export default function HomeStackScreen() {
             />
             <HomeStack.Screen 
                 name="Search" component={SearchHome}
+            />
+            <HomeStack.Screen 
+                name="Profile" component={Profile}
             />
         </HomeStack.Navigator>
     );

@@ -7,6 +7,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   Image,
+  Modal
 } from 'react-native';
 import Slider from '@react-native-community/slider'
 import Video from 'react-native-video'; /// alreadyimported this
@@ -15,6 +16,8 @@ import IconAnt from 'react-native-vector-icons/AntDesign'
 import Octicon from 'react-native-vector-icons/Octicons'
 import Orientation from 'react-native-orientation';
 import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import IconFont from 'react-native-vector-icons/FontAwesome'
 
 const { width } = Dimensions.get('window');
 const samplevideo = require('./sample.mp4');
@@ -29,7 +32,8 @@ export default class VideoList extends React.Component {
       overlay: false,
       fullscreen: false,
       like: true,
-      color: '#777777'
+      color: '#777777',
+      modal: false
     };
   }
   onChange() {
@@ -117,12 +121,74 @@ export default class VideoList extends React.Component {
     this.setState({ fullscreen: !fullscreen });
   }
 
-
+  change = () => {
+    let abc = !this.state.modal
+    this.setState({ modal: abc })
+  }
+  
   render = () => {
-    const { currentTime, duration, paused, overlay, fullscreen } = this.state;
+    const { currentTime, duration, paused, overlay, fullscreen, modal } = this.state;
     const { item } = this.props
     return (
       <View style={styles.container}>
+        <Modal
+          transparent={true}
+          visible={this.state.modal}
+        >
+          <View style={styles.modal}>
+            <TouchableOpacity
+              style={{ alignItems: 'center' }}
+              onPress={() => (
+                this.setState({modal: !this.state.modal})
+              )}
+            >
+              <Ionicons name="chevron-down" size={30} color="#f1538e" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.listModal}
+            >
+              <View style={styles.iconModal}>
+                <IconFont name="bookmark-o" size={30} />
+              </View>
+              <View style={styles.text00}>
+                <Text style={styles.text01}>Lưu bài viết</Text>
+                <Text style={styles.text02}>Thêm vào danh sách mục đã lưu</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.listModal}
+            >
+              <View style={styles.iconModal}>
+                <IconAnt name="staro" size={30} />
+              </View>
+              <View style={styles.text00}>
+                <Text style={styles.text01}>Thêm vào mục yêu thích</Text>
+                <Text style={styles.text02}>Ưu tiên bài viết trong bảng tin</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.listModal}
+            >
+              <View style={styles.iconModal}>
+                <IconAnt name="closesquareo" size={30} />
+              </View>
+              <View style={styles.text00}>
+                <Text style={styles.text01}>Ẩn bài viết</Text>
+                <Text style={styles.text02}>Ẩn bớt các bài viết tương tự</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.listModal}
+            >
+              <View style={styles.iconModal}>
+                <Ionicons name="md-notifications-outline" size={30} />
+              </View>
+              <View style={styles.text00}>
+                <Text style={styles.text01}>Bật thông báo cho bài viết này</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </Modal>
         <View style={styles.user}>
           <View style={{ flex: 4, flexDirection: 'row' }}>
             <View style={styles.avatar}>
@@ -132,7 +198,9 @@ export default class VideoList extends React.Component {
               {item.username}
             </Text>
           </View>
-          <TouchableOpacity style={styles.edit}>
+          <TouchableOpacity style={styles.edit}
+            onPress={this.change.bind(this)}
+          >
             <Feather name="more-horizontal" size={30} />
           </TouchableOpacity>
         </View>
@@ -291,6 +359,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: "80%",
     justifyContent: 'center',
+  },
+  modal: {
+    marginTop: 400,
+    padding: 20,
+    backgroundColor: '#F8F8FF',
+    height: "68%",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30
+  },
+  listModal: {
+    flexDirection: "row",
+    alignItems: 'center',
+    borderBottomColor: "#DDDDDD",
+    borderBottomWidth: 2,
+    padding: 3
+  },
+  iconModal: {
+    flex: 1,
+  },
+  text00: {
+    flex: 8,
+    marginLeft: 20
+  },
+  text01: {
+    fontSize: 20,
   }
-
 });

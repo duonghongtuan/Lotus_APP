@@ -4,20 +4,26 @@ import {
     StyleSheet, ImageBackground,
     TouchableOpacity
 } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-export default function Story({item}) {
+export default function Story({ item }) {
+    const navigation = useNavigation()
     return (
-        <View>
-            <View style={styles.container}>
-                <TouchableOpacity activeOpacity={0.8}>
-                    <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.imageBackground} source={{ uri: item.image}}>
-                        <Image style={styles.avatar} source={{ uri: item.avatar}} />
-                    </ImageBackground>
-                    <View style={styles.nameWrapper}>
-                        <Text style={styles.name}>{item.username}</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+        <View style={styles.container}>
+            <TouchableOpacity activeOpacity={0.8}
+                onPress={()=>{
+                    navigation.navigate('StoryDetail',{
+                      data: item  
+                    })
+                }}
+            >
+                <ImageBackground imageStyle={{ resizeMode: 'cover' }} style={styles.imageBackground} source={{ uri: item.image }}>
+                    <Image style={styles.avatar} source={{ uri: item.avatar }} />
+                </ImageBackground>
+                <View style={styles.nameWrapper}>
+                    <Text style={styles.name}>{item.username}</Text>
+                </View>
+            </TouchableOpacity>
         </View>
     )
 }

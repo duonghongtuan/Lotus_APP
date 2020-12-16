@@ -12,7 +12,13 @@ const HomeScreen = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
                 <View style={styles.user}>
-                    <Image style={styles.imageAvater} source={require('../images/user.png')} />
+                    <TouchableOpacity
+                    onPress={()=>(navigation.navigate('Profile',{
+                        name: 'Min'
+                    }))}
+                    >
+                        <Image style={styles.imageAvater} source={require('../images/user.png')} />
+                    </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.writepost}
                         onPress={() => navigation.navigate('CreatePost')}

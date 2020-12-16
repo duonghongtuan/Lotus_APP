@@ -19,7 +19,7 @@ export default class CreatePost extends Component {
         this.state = {
             text: '',
             avatarSource: null,
-            modalVisible: 'false'
+            modalVisible: false
         }
     }
     Show() {

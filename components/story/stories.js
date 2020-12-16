@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import stories from './datastories'
 import Story from './story'
 
-export default function Stories() {
+export default function Stories() { 
     return (
         <View>
             <View style={styles.container}>
