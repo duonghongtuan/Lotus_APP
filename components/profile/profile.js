@@ -12,7 +12,6 @@ export default function Profile({ route }) {
 
     useEffect(() => {
         const name = route.params.name
-        console.log(name)
         var tempData = [];
         for (var index = 0; index < DATA.length; index++) {
             if (DATA[index].username == name) {
@@ -20,9 +19,8 @@ export default function Profile({ route }) {
             }
         }
         setobj(tempData)
+        console.log(obj)
     }, [])
-
-    //console.log(obj)
     return (
         <View style={styles.container}>
             <ScrollView>

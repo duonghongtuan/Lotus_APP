@@ -25,6 +25,13 @@ export default function Item({ item }) {
       name: item.username
     })
   }
+  const goCommet=()=>{
+    navigation.navigate('CommentPost',{
+      avatar: item.avatar,
+      name: item.username,
+      id: item.id
+    })
+  }
   return (
     <View>
 
@@ -126,7 +133,9 @@ export default function Item({ item }) {
             <Text style={{ fontSize: 17, marginLeft: 10, color: color }}>Thích</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity  >
+        <TouchableOpacity 
+          onPress={goCommet}
+        >
           <View style={styles.like}>
             <Octicon style={styles.icon} name="comment" size={30} />
             <Text style={{ fontSize: 17, marginLeft: 10, color: "#777777" }}>Bình luận</Text>

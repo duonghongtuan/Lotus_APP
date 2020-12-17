@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     View,
@@ -8,12 +8,43 @@ import {
     Button,
     TextInput
 } from 'react-native';
-import { useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("")
     const navigation = useNavigation()
+
+    useEffect(() => {
+        fetch('http://it4895.herokuapp.com/it4895/login?phonenumber=0865367921&password=123456')
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json)
+                console.log("hello")
+            })
+            .then((json) => {
+                return json.movies;
+            })
+            .catch((error) => {
+                console.error(error);
+                console.log("hello")
+            });
+    }, [])
+    const login = () => {
+        fetch('http://it4895.herokuapp.com/it4895/login?phonenumber=0865367921&password=123456')
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json)
+                console.log("hello")
+            })
+            .then((json) => {
+                return json.movies;
+            })
+            .catch((error) => {
+                console.error(error);
+                console.log("hello")
+            });
+    }
 
     return (
         <View >
@@ -41,7 +72,8 @@ const Login = () => {
                     <Button
                         color="#de457d"
                         title="LOGIN"
-                        onPress={() => navigation.navigate('MainTab')}
+                    //    onPress={login}
+                    onPress={() => navigation.navigate('MainTab')}
                     />
                 </View>
             </View>
