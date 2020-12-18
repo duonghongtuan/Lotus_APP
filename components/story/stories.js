@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         height: 200,
         width: 125,
+        opacity: 0.7
     },
     iconWrapper: {
         marginTop: 10,

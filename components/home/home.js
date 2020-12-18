@@ -1,23 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import { View, Image, Text, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import DATA from '../posts/data'
 import Item from '../posts/posts'
 import { useNavigation } from '@react-navigation/native'
 import Stories from "../story/stories";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
+    const [obj, setobj] = useState([{}])
+    const [data, setData] = useState([{}])
+    
+    useEffect(() => {
+        async function fetchData() {
+            let phone = await AsyncStorage.getItem('phonenumber')
+            let array = await AsyncStorage.getItem('DATA')
+            var DATA = JSON.parse(array);
+            var tempData = [];
+            for (var index = 0; index < DATA.length; index++) {
+                if (DATA[index].phonenumber == phone) {
+                    tempData.push(DATA[index]);
+                }
+            }
+            setobj(tempData)
+            let post = await AsyncStorage.getItem('post')
+            let array1 = []
+            let array2 = []
+            if (post) {
+                array1 = JSON.parse(post)
+                array2 = array1.concat(DATA);
+            } else {
+                array2 = DATA
+            }
+            setData(array2)
+            await AsyncStorage.setItem('DATA', JSON.stringify(array2))
+        }
+        fetchData();
+
+    }, [])
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView>
                 <View style={styles.user}>
                     <TouchableOpacity
-                    onPress={()=>(navigation.navigate('Profile',{
-                        name: 'Min'
-                    }))}
+                        onPress={() => (navigation.navigate('Profile', {
+                            name: obj[0].username
+                        }))}
                     >
-                        <Image style={styles.imageAvater} source={require('../images/user.png')} />
+                        <Image style={styles.imageAvater} source={{ uri: obj[0].avatar }} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.writepost}
@@ -27,7 +57,7 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <Stories />
-                {DATA.map((item, index) => (
+                {data.map((item, index) => (
                     <Item item={item} key={index} ></Item>
                 ))}
             </ScrollView>

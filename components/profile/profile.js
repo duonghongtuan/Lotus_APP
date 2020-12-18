@@ -3,30 +3,44 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'rea
 import AvartarProfile from './AvatarProfile'
 import FriendProfile from './FriendProfile'
 import { useNavigation } from '@react-navigation/native'
-import DATA from '../posts/data'
+//import DATA from '../posts/data'
 import Item from '../posts/posts'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profile({ route }) {
     const navigation = useNavigation()
     const [obj, setobj] = useState([{}])
 
     useEffect(() => {
-        const name = route.params.name
-        var tempData = [];
-        for (var index = 0; index < DATA.length; index++) {
-            if (DATA[index].username == name) {
-                tempData.push(DATA[index]);
+        async function fetchData() {
+            let data = await AsyncStorage.getItem('DATA')
+            let DATA = JSON.parse(data);
+            let name = route.params.name
+            var tempData = [];
+            for (var index = 0; index < DATA.length; index++) {
+                if (DATA[index].username == name) {
+                    tempData.push(DATA[index]);
+                }
             }
+            setobj(tempData)
         }
-        setobj(tempData)
-        console.log(obj)
+        fetchData();
+        // const name = route.params.name
+        // var tempData = [];
+        // for (var index = 0; index < DATA.length; index++) {
+        //     if (DATA[index].username == name) {
+        //         tempData.push(DATA[index]);
+        //     }
+        // }
+        // setobj(tempData)
+        // console.log(obj)
     }, [])
     return (
         <View style={styles.container}>
             <ScrollView>
-            
-                    <AvartarProfile data={obj[0]}/>
-                
+
+                <AvartarProfile data={obj[0]} />
+
                 <FriendProfile />
                 <View style={styles.user}>
                     <TouchableOpacity

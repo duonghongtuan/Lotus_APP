@@ -3,10 +3,10 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Modal } from "react-na
 import Icon from 'react-native-vector-icons/AntDesign'
 import Octicon from 'react-native-vector-icons/Octicons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Feather from 'react-native-vector-icons/Feather'
 import IconFont from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native'
-import DATA from '../posts/data'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function CommentPost({ route }) {
     const navigation = useNavigation()
@@ -16,16 +16,20 @@ export default function CommentPost({ route }) {
     const [item, setItem] = useState([{}])
 
     useEffect(() => {
-        const id = route.params.id
-        var tempData = [];
-        for (var index = 0; index < DATA.length; index++) {
-            if (DATA[index].id == id) {
-                tempData.push(DATA[index]);
+        async function fetchData() {
+            let DATA = await AsyncStorage.getItem('DATA')
+            const id = route.params.id
+            var tempData = JSON.parse(DATA);
+            var data = []
+            for (var index = 0; index < tempData.length; index++) {
+                if (tempData[index].id == id) {
+                    data.push(tempData[index]);
+                }
             }
+            setItem(data)
+            console.log(item)
         }
-        console.log(tempData)
-        setItem(tempData)
-        console.log(item)
+        fetchData();
     }, [])
     const onChange = () => {
         setLike(!like)
@@ -41,97 +45,98 @@ export default function CommentPost({ route }) {
         })
     }
     return (
-        <View>
+        <ScrollView>
+            <View>
+                <Modal
+                    transparent={true}
+                    visible={modal}
+                >
+                    <View style={styles.modal}>
+                        <TouchableOpacity
+                            style={{ alignItems: 'center' }}
+                            onPress={() => (
+                                setModal(!modal)
+                            )}
+                        >
+                            <Ionicons name="chevron-down" size={30} color="#f1538e" />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.listModal}
+                        >
+                            <View style={styles.iconModal}>
+                                <IconFont name="bookmark-o" size={30} />
+                            </View>
+                            <View style={styles.text00}>
+                                <Text style={styles.text01}>Lưu bài viết</Text>
+                                <Text style={styles.text02}>Thêm vào danh sách mục đã lưu</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.listModal}
+                        >
+                            <View style={styles.iconModal}>
+                                <Icon name="staro" size={30} />
+                            </View>
+                            <View style={styles.text00}>
+                                <Text style={styles.text01}>Thêm vào mục yêu thích</Text>
+                                <Text style={styles.text02}>Ưu tiên bài viết trong bảng tin</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.listModal}
+                        >
+                            <View style={styles.iconModal}>
+                                <Icon name="closesquareo" size={30} />
+                            </View>
+                            <View style={styles.text00}>
+                                <Text style={styles.text01}>Ẩn bài viết</Text>
+                                <Text style={styles.text02}>Ẩn bớt các bài viết tương tự</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.listModal}
+                        >
+                            <View style={styles.iconModal}>
+                                <Ionicons name="md-notifications-outline" size={30} />
+                            </View>
+                            <View style={styles.text00}>
+                                <Text style={styles.text01}>Bật thông báo cho bài viết này</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
 
-            <Modal
-                transparent={true}
-                visible={modal}
-            >
-                <View style={styles.modal}>
-                    <TouchableOpacity
-                        style={{ alignItems: 'center' }}
-                        onPress={() => (
-                            setModal(!modal)
-                        )}
-                    >
-                        <Ionicons name="chevron-down" size={30} color="#f1538e" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.listModal}
-                    >
-                        <View style={styles.iconModal}>
-                            <IconFont name="bookmark-o" size={30} />
-                        </View>
-                        <View style={styles.text00}>
-                            <Text style={styles.text01}>Lưu bài viết</Text>
-                            <Text style={styles.text02}>Thêm vào danh sách mục đã lưu</Text>
+                <View >
+                    <Text style={styles.post}>{item[0].post}</Text>
+                </View>
+                {item[0].imagePost ?
+                    <View style={styles.image}>
+                        <Image style={styles.imagePost} source={{ uri: item[0].imagePost }} />
+                    </View>
+                    : null
+                }
+
+                <View style={styles.postBottom}>
+                    <TouchableOpacity onPress={onChange}>
+                        <View style={styles.like}>
+                            <Icon style={styles.icon} name="like1" size={30} style={{ color: color }} />
+                            <Text style={{ fontSize: 17, marginLeft: 10, color: color }}>Thích</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.listModal}
-                    >
-                        <View style={styles.iconModal}>
-                            <Icon name="staro" size={30} />
-                        </View>
-                        <View style={styles.text00}>
-                            <Text style={styles.text01}>Thêm vào mục yêu thích</Text>
-                            <Text style={styles.text02}>Ưu tiên bài viết trong bảng tin</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.listModal}
-                    >
-                        <View style={styles.iconModal}>
-                            <Icon name="closesquareo" size={30} />
-                        </View>
-                        <View style={styles.text00}>
-                            <Text style={styles.text01}>Ẩn bài viết</Text>
-                            <Text style={styles.text02}>Ẩn bớt các bài viết tương tự</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.listModal}
-                    >
-                        <View style={styles.iconModal}>
-                            <Ionicons name="md-notifications-outline" size={30} />
-                        </View>
-                        <View style={styles.text00}>
-                            <Text style={styles.text01}>Bật thông báo cho bài viết này</Text>
+                    <TouchableOpacity  >
+                        <View style={styles.like}>
+                            <Octicon style={styles.icon} name="comment" size={30} />
+                            <Text style={{ fontSize: 17, marginLeft: 10, color: "#777777" }}>Bình luận</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-            </Modal>
-
-            <View >
-                <Text style={styles.post}>{item[0].post}</Text>
-            </View>
-            {item[0].imagePost ?
-                <View style={styles.image}>
-                    <Image style={styles.imagePost} source={{ uri: item[0].imagePost }} />
+                <View style={styles.total}>
+                    <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
+                    <Text style={{ fontSize: 18, marginLeft: 10 }}>{item[0].totalLike}</Text>
+                    {/* <Text style={{ fontSize: 18, marginLeft: 200 }}>0 bình luận</Text> */}
                 </View>
-                : null
-            }
-            
-            <View style={styles.postBottom}>
-                <TouchableOpacity onPress={onChange}>
-                    <View style={styles.like}>
-                        <Icon style={styles.icon} name="like1" size={30} style={{ color: color }} />
-                        <Text style={{ fontSize: 17, marginLeft: 10, color: color }}>Thích</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity  >
-                    <View style={styles.like}>
-                        <Octicon style={styles.icon} name="comment" size={30} />
-                        <Text style={{ fontSize: 17, marginLeft: 10, color: "#777777" }}>Bình luận</Text>
-                    </View>
-                </TouchableOpacity>
             </View>
-            <View style={styles.total}>
-                <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
-                <Text style={{ fontSize: 18, marginLeft: 10}}>{item[0].totalLike}</Text>
-                {/* <Text style={{ fontSize: 18, marginLeft: 200 }}>0 bình luận</Text> */}
-            </View>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -180,7 +185,8 @@ const styles = StyleSheet.create({
         fontSize: 17
     },
     imagePost: {
-        height: 200
+        height:400,
+        resizeMode:"contain",
     },
     total: {
         flexDirection: 'row',

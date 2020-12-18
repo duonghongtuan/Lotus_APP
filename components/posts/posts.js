@@ -96,8 +96,9 @@ export default function Item({ item }) {
 
       <View style={styles.user}>
         <TouchableOpacity
+        style={{flex: 2}}
           onPress={goProfile}>
-          <View style={{ flex: 4, flexDirection: 'row' }}>
+          <View style={{flexDirection: 'row' }}>
             <View style={styles.avatar}>
               <Image style={styles.imageAvater} source={{ uri: item.avatar }} />
             </View>
@@ -160,7 +161,6 @@ const styles = StyleSheet.create({
   },
   user: {
     marginTop: 10,
-    flex: 2,
     flexDirection: "row"
   },
   username: {
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 17
   },
   imagePost: {
-    height: 200
+    height: 300
   },
   total: {
     flexDirection: 'row',

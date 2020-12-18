@@ -59,14 +59,14 @@ const styles = StyleSheet.create({
   image: {
     height: "84%",
     width: "100%",
-    resizeMode: 'cover',
+    resizeMode: 'contain',
     flexDirection: 'row', 
   },
   slide1: {
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
-    backgroundColor: '#f1538e',
+    backgroundColor: '#FF99CC',
   },
   header:{
     flexDirection: 'row',

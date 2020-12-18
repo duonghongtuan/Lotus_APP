@@ -8,42 +8,31 @@ import {
     Button,
     TextInput
 } from 'react-native';
+import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DATA from '../posts/data'
 
 const Login = () => {
-    const [username, setUsername] = useState("");
+    const [phonenumber, setPhonenumber] = useState("");
     const [password, setPassword] = useState("")
     const navigation = useNavigation()
 
     useEffect(() => {
-        fetch('http://it4895.herokuapp.com/it4895/login?phonenumber=0865367921&password=123456')
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json)
-                console.log("hello")
-            })
-            .then((json) => {
-                return json.movies;
-            })
-            .catch((error) => {
-                console.error(error);
-                console.log("hello")
-            });
+
     }, [])
-    const login = () => {
-        fetch('http://it4895.herokuapp.com/it4895/login?phonenumber=0865367921&password=123456')
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json)
-                console.log("hello")
-            })
-            .then((json) => {
-                return json.movies;
-            })
-            .catch((error) => {
-                console.error(error);
-                console.log("hello")
-            });
+    const login = async () => {
+        for (var index = 0; index < DATA.length; index++) {  
+            if ((DATA[index].phonenumber === phonenumber)&(DATA[index].password===password)) {
+                try {
+                    await AsyncStorage.setItem('DATA', JSON.stringify(DATA))
+                    await AsyncStorage.setItem('phonenumber',phonenumber)
+                    navigation.navigate('MainTab')
+               } catch (error) {
+                   console.log(error)
+               }
+            }
+        }
     }
 
     return (
@@ -58,9 +47,9 @@ const Login = () => {
                 <View>
                     <TextInput
                         style={styles.textIput}
-                        placeholder="User name"
-                        defaultValue={username}
-                        onChangeText={text => setUsername(text)}
+                        placeholder="Phone number"
+                        defaultValue={phonenumber}
+                        onChangeText={text => setPhonenumber(text)}
                     />
                     <TextInput
                         secureTextEntry={true}
@@ -72,8 +61,8 @@ const Login = () => {
                     <Button
                         color="#de457d"
                         title="LOGIN"
-                    //    onPress={login}
-                    onPress={() => navigation.navigate('MainTab')}
+                        onPress={login}
+                    //onPress={() => navigation.navigate('MainTab')}
                     />
                 </View>
             </View>
@@ -108,7 +97,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fee7ef',
         width: 300,
         paddingLeft: 20,
-        marginBottom: 20
+        marginBottom: 20,
+        fontSize: 15
     },
 
     fixToText: {

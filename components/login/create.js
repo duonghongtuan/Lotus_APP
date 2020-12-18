@@ -9,10 +9,12 @@ import {
     View,
     ScrollView,
 } from 'react-native';
-import { useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
+
 
 const Create = () => {
     const navigation = useNavigation()
+   
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -43,7 +45,6 @@ const Create = () => {
                         style={styles.textIput}
                         placeholder="Birthday"
                     />
-
                     <Button
                         color="#de457d"
                         title="Create"
