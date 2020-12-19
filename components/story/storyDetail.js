@@ -24,7 +24,7 @@ export default function StoryDetail({ route }) {
     // if(position===2){
     //   navigation.navigate('MainTab')
     // }
-    navigation.navigate('MainTab')
+    navigation.navigate('Lotus')
   }
   return (
     <Swiper style={styles.wrapper}

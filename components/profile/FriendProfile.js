@@ -1,10 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import DATA from '../posts/data'
+
+const Frineds = ({item}) => {
+    const navigation = useNavigation()
+    // const goProfile = () => {
+    //     navigation.navigate('Profile', {
+    //         name: item.username
+    //     })
+    // }
+    return (
+        <TouchableOpacity style={styles.friend}
+            //onPress={goProfile(item)}
+        >
+            <Image style={styles.avatar} source={{ uri: item.avatar }} />
+            <Text style={styles.username}>{item.username}</Text>
+        </TouchableOpacity>
+    )
+}
 
 export default function FriendProfile() {
+    const navigation = useNavigation()
+    const [array1, setArray1] = useState([{}])
+    const [array2, setArrar2] = useState([{}])
+
+    const goFriends = () => {
+        navigation.navigate('ListFriends')
+    }
+
+    useEffect(() => {
+        var tempData1 = [];
+        var tempData2 = [];
+        for (var index = 0; index < DATA.length; index++) {
+            if (index < 3) {
+                tempData1.push(DATA[index]);
+            }
+            if (index > 2 & index < 6) {
+                tempData2.push(DATA[index]);
+            }
+        }
+        setArray1(tempData1)
+        setArrar2(tempData2)
+    }, [])
+
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row', marginTop: 10,  }}>
+            <View style={{ flexDirection: 'row', marginTop: 10, }}>
                 <View style={{ flex: 1, marginLeft: 20 }}>
                     <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
                         Bạn bè
@@ -16,50 +58,22 @@ export default function FriendProfile() {
                     </Text>
                 </View>
             </View>
-            <View style={{marginLeft: 20,marginBottom: 10 }}>
-                <Text style={{fontSize: 18, color: '#888888'}}>399 người bạn</Text>
+            <View style={{ marginLeft: 20, marginBottom: 10 }}>
+                <Text style={{ fontSize: 18, color: '#888888' }}>399 người bạn</Text>
             </View>
             <View style={styles.listFriend}>
-                <TouchableOpacity
-                    style={styles.friend}
-                >
-                    <Image style={styles.avatar} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUONVyXYt8rv0PbnkzvLZV8ftmjHsdH6qmOg&usqp=CAU" }} />
-                    <Text style={styles.username}> Jennie</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.friend}
-                >
-                    <Image style={styles.avatar} source={{ uri: "https://vtv1.mediacdn.vn/thumb_w/650/2019/8/26/69494009400154943152580015494244680001-vs-15667900255311947342930.jpg" }} />
-                    <Text style={styles.username}>Spider Man</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.friend}
-                >
-                    <Image style={styles.avatar} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUONVyXYt8rv0PbnkzvLZV8ftmjHsdH6qmOg&usqp=CAU" }} />
-                    <Text style={styles.username}> Jennie</Text>
-                </TouchableOpacity>
+                {array1.map((item, index) => (
+                   <Frineds item={item} key={index}/> 
+                ))}
             </View>
             <View style={styles.listFriend}>
-                <TouchableOpacity
-                    style={styles.friend}
-                >
-                    <Image style={styles.avatar} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUONVyXYt8rv0PbnkzvLZV8ftmjHsdH6qmOg&usqp=CAU" }} />
-                    <Text style={styles.username}> Jennie</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.friend}
-                >
-                    <Image style={styles.avatar} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUONVyXYt8rv0PbnkzvLZV8ftmjHsdH6qmOg&usqp=CAU" }} />
-                    <Text style={styles.username}> Jennie</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.friend}
-                >
-                    <Image style={styles.avatar} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUONVyXYt8rv0PbnkzvLZV8ftmjHsdH6qmOg&usqp=CAU" }} />
-                    <Text style={styles.username}> Jennie</Text>
-                </TouchableOpacity>
+                {array2.map((item, index) => (
+                    <Frineds item={item} key={index}/> 
+                ))}
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={goFriends}
+            >
                 <View style={styles.allFriend}>
                     <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
                         Xem tất cả bạn bè</Text>

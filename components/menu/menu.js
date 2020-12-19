@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View, StyleSheet, Image } from 'react-native'
 
+
+
 export default class Menu extends Component {
     render() {
         return (
@@ -10,7 +12,7 @@ export default class Menu extends Component {
                         <Image style={styles.imageAvater} source={require('../images/user.png')} />
                     </View>
                     <View>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30 }}>
+                        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 80 }}>
                             No Name
                         </Text>
                     </View>
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
         borderRadius: 40
     },
     avatar: {
-        width: "30%",
+        width: "80%",
         alignItems: "center",
         justifyContent: "center"
     },

@@ -26,7 +26,7 @@ const Login = () => {
         for (var index = 0; index < DATA.length; index++) {
             if ((DATA[index].phonenumber === phonenumber) & (DATA[index].password === password)) {
                 try {
-                    //await AsyncStorage.clear()
+                    await AsyncStorage.clear()
                     await AsyncStorage.setItem('DATA', JSON.stringify(DATA))
                     await AsyncStorage.setItem('phonenumber', phonenumber)
                     return navigation.navigate('MainTab')

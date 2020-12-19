@@ -10,6 +10,7 @@ export default function UserPost({ image }) {
     const navigation = useNavigation()
     const [obj, setobj] = useState([{}])
     var date = new Date()
+    var id = date.getDate()+"id"+date.getHours()+date.getMinutes()+date.getSeconds()
     useEffect(() => {
         async function fetchData() {
             let phone = await AsyncStorage.getItem('phonenumber')
@@ -26,7 +27,7 @@ export default function UserPost({ image }) {
     }, [])
     const addPost = async () => {
         let array = [{
-            id: "12fdddd3",
+            id: id,
             username: obj[0].username,
             totalLike: 10,
             password: "",
@@ -40,7 +41,9 @@ export default function UserPost({ image }) {
         setText('')
         image=''
         await AsyncStorage.setItem('post', JSON.stringify(array)) 
-        navigation.navigate('Lotus')
+        navigation.navigate('Lotus',{
+            load: 'load'
+        })
     }
 
     return (

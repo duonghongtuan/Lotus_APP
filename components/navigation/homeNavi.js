@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import Profile from '../profile/profile';
 import CommentPost from '../home/CommentPost';
 import Feather from 'react-native-vector-icons/Feather'
+import ListFriends from '../profile/ListFriends';
 
 
 
@@ -57,10 +58,9 @@ export default function HomeStackScreen() {
                     ),
                 }}
             />
-            <HomeStack.Screen
-                name="Search" component={SearchHome} />
-            <HomeStack.Screen
-                name="Profile" component={Profile} />
+            <HomeStack.Screen name="Search" component={SearchHome} />
+            <HomeStack.Screen name="Profile" component={Profile} />
+            <HomeStack.Screen name="ListFriends" component={ListFriends} />
             <HomeStack.Screen
                 name="CommentPost"
                 component={CommentPost}
