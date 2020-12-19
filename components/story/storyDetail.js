@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native'
 import { Image } from 'react-native'
 import Story from './story'
 import stories from './datastories'
+import { ImageBackground, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/EvilIcons'
 
 
 export default function StoryDetail({ route }) {
@@ -24,13 +26,6 @@ export default function StoryDetail({ route }) {
     // }
     navigation.navigate('MainTab')
   }
-  // const Story = ({ data }) => {
-  //   return (
-  //     <View style={styles.slide1}>
-  //       <Image style={styles.image} source={{ uri: data.avatar }} />
-  //     </View>
-  //   )
-  // }
   return (
     <Swiper style={styles.wrapper}
       showsButtons={true}
@@ -41,52 +36,56 @@ export default function StoryDetail({ route }) {
       showsPagination={false}
     >
       {stories.map((item, index) => (
-        <View style={styles.slide1} key ={index}>
-          <Image style={styles.image} source={{ uri: item.image}} />
+        <View style={styles.slide1} key={index}>
+          <View style={styles.header}>
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+              <Image style={styles.avatar} source={{ uri: item.avatar }} />
+              <Text style={styles.username}>{item.username}</Text>
+            </View>
+            <TouchableOpacity style={styles.icon}
+              onPress={callBack}
+            >
+              <Icon name="close" size={35} />
+            </TouchableOpacity>
+          </View>
+          <Image style={styles.image} source={{ uri: item.image }} />
         </View>
       ))}
-      {/* <View style={styles.slide1}>
-        <Image style={styles.image} source={{ uri: 'https://static2.yan.vn/YanNews/2167221/202003/xuat-hien-voi-hinh-anh-nhuan-sac-min-khien-fan-dung-ngoi-khong-yen-a7af157b.jpg' }} />
-      </View>
-      <View style={styles.slide2}>
-        <Text style={styles.text}>Beautiful</Text>
-        <Button onPress={callBack} title='ok' />
-      </View>
-      <View style={styles.slide3}>
-        <Text style={styles.text}>And simple</Text>
-        <Button onPress={callBack} title='ok' />
-      </View> */}
     </Swiper>
   )
 }
 const styles = StyleSheet.create({
   wrapper: {},
   image: {
+    height: "84%",
     width: "100%",
-    height: 500,
-    resizeMode: 'cover'
+    resizeMode: 'contain',
+    flexDirection: 'row', 
   },
   slide1: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB'
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    backgroundColor: '#FF99CC',
   },
-  slide2: {
+  header:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 5
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginLeft: 10
+  },
+  username: {
+    fontSize: 25,
+    marginLeft: 20
+  },
+  icon: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5'
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9'
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold'
+    alignItems: 'flex-end',
+    marginRight: 10
   }
 })
