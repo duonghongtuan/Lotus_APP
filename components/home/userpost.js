@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import DATA from '../posts/data'
@@ -37,6 +38,7 @@ export default function UserPost({ image }) {
             imagePost: image,
             avatar: obj[0].avatar,
             video: '',
+            dateTime: moment(),
         }]
         setText('')
         image=''

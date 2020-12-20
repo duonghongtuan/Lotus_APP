@@ -63,7 +63,7 @@ function MyTabs() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="notifications-outline" color={color} size={size} />
           ),
-          tabBarBadge: 3,
+          tabBarBadge: 8,
         }}
       />
       <Tab.Screen

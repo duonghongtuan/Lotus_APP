@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, Image } from 'react-native';
+import ListMenu from './listMenu';
 
 
 
@@ -9,7 +10,7 @@ export default class Menu extends Component {
             <View style={styles.container}>
                 <View style={styles.user}>
                     <View style={styles.avatar}>
-                        <Image style={styles.imageAvater} source={require('../images/user.png')} />
+                        <Image style={styles.imageAvater} source={require('../images/logo.png')} />
                     </View>
                     <View>
                         <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 80 }}>
@@ -18,7 +19,7 @@ export default class Menu extends Component {
                     </View>
                 </View>
                 <View style={styles.listMenu}>
-
+                    <ListMenu />
                 </View>
                 <View></View>
             </View>
@@ -37,8 +38,8 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     imageAvater: {
-        width: 80,
-        height: 80,
+        width: 60,
+        height: 60,
         borderRadius: 40
     },
     avatar: {
@@ -47,6 +48,6 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     listMenu: {
-        flex: 8
+        flex: 10,
     }
 })

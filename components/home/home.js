@@ -22,6 +22,35 @@ const HomeScreen = ({ route }) => {
     const navigation = useNavigation()
     const [obj, setobj] = useState([{}])
     const [data, setData] = useState([{}])
+<<<<<<< HEAD
+    
+    useEffect(() => {
+        async function fetchData() {
+            let phone = await AsyncStorage.getItem('phonenumber')
+            let array = await AsyncStorage.getItem('DATA')
+            var DATA = JSON.parse(array);
+            var tempData = [];
+            for (var index = 0; index < DATA.length; index++) {
+                if (DATA[index].phonenumber == phone) {
+                    tempData.push(DATA[index]);
+                }
+            }
+            setobj(tempData)
+            let post = await AsyncStorage.getItem('post')
+            let array1 = []
+            let array2 = []
+            if (post) {
+                array1 = JSON.parse(post)
+                array2 = array1.concat(DATA);
+            } else {
+                array2 = DATA
+            }
+            setData(array2)
+            await AsyncStorage.setItem('DATA', JSON.stringify(array2))
+        }
+        fetchData();
+
+=======
     const [refreshing, setRefreshing] = useState(false)
 
     async function fetchData() {
@@ -55,6 +84,7 @@ const HomeScreen = ({ route }) => {
 
     useEffect(() => {
         fetchData()
+>>>>>>> 66c1477ab6f7af9aa42b1ba65f3f8cfeceb163fe
     }, [])
     return (
         <SafeAreaView style={{ flex: 1 }}>
