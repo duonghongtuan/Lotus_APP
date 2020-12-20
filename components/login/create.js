@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
     Button,
     Image,
@@ -10,9 +10,32 @@ import {
     ScrollView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Create = () => {
     const navigation = useNavigation()
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("")
+    const [phonenumber, setPhonenumber] = useState("");
+    
+    const addUser = async () => {
+        let array = [{
+            id: "12fdddd3",
+            username: username,
+            totalLike: 10,
+            password: "",
+            phonenumber: obj[0].phonenumber,
+            post: text,
+            coverImage: obj[0].coverImage,
+            imagePost: image,
+            avatar: obj[0].avatar,
+            video: '',
+        }]
+        setText('')
+        image=''
+        await AsyncStorage.setItem('post', JSON.stringify(array)) 
+        navigation.navigate('Lotus')
+    }
    
     return (
         <ScrollView style={{ backgroundColor: 'white' }}>
@@ -27,17 +50,20 @@ const Create = () => {
                     <TextInput
                         style={styles.textIput}
                         placeholder="Username"
+                        onChangeText={text => setUsername(text)}
                     />
 
                     <TextInput
                         secureTextEntry={true}
                         style={styles.textIput}
                         placeholder="Password"
+                        onChangeText={text => setPassword(text)}
                     />
 
                     <TextInput
                         style={styles.textIput}
                         placeholder="Phone number"
+                        onChangeText={text => setPhonenumber(text)}
                     />
 
                     <TextInput

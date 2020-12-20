@@ -12,6 +12,7 @@ import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DATA from '../posts/data'
+import { Toast } from 'native-base';
 
 const Login = () => {
     const [phonenumber, setPhonenumber] = useState("");
@@ -22,15 +23,28 @@ const Login = () => {
 
     }, [])
     const login = async () => {
-        for (var index = 0; index < DATA.length; index++) {  
-            if ((DATA[index].phonenumber === phonenumber)&(DATA[index].password===password)) {
+        for (var index = 0; index < DATA.length; index++) {
+            if ((DATA[index].phonenumber === phonenumber) & (DATA[index].password === password)) {
                 try {
+                    await AsyncStorage.clear()
                     await AsyncStorage.setItem('DATA', JSON.stringify(DATA))
-                    await AsyncStorage.setItem('phonenumber',phonenumber)
-                    navigation.navigate('MainTab')
-               } catch (error) {
-                   console.log(error)
-               }
+                    await AsyncStorage.setItem('phonenumber', phonenumber)
+                    return navigation.navigate('MainTab')
+                } catch (error) {
+                    console.log(error)
+                }
+            }else {
+                Toast.show({
+                    text: "Bạn đã nhập sai",
+                    buttonText: "Okay"
+                })
+            }
+
+            if ((phonenumber == '') | (password == '')) {
+                Toast.show({
+                    text: "Xin hãy nhập thông tin",
+                    buttonText: "Okay"
+                })
             }
         }
     }

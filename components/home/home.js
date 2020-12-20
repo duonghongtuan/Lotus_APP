@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { View, Image, Text, SafeAreaView, TouchableOpacity, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import {
+    View, Image, Text, SafeAreaView,
+    TouchableOpacity,
+    StyleSheet,
+    Animated,
+    RefreshControl,
+    ScrollView
+}
+    from "react-native";
 import Item from '../posts/posts'
 import { useNavigation } from '@react-navigation/native'
 import Stories from "../story/stories";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HomeScreen = () => {
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
+const HomeScreen = ({ route }) => {
     const navigation = useNavigation()
     const [obj, setobj] = useState([{}])
     const [data, setData] = useState([{}])
+<<<<<<< HEAD
     
     useEffect(() => {
         async function fetchData() {
@@ -37,10 +50,50 @@ const HomeScreen = () => {
         }
         fetchData();
 
+=======
+    const [refreshing, setRefreshing] = useState(false)
+
+    async function fetchData() {
+        let phone = await AsyncStorage.getItem('phonenumber')
+        let array = await AsyncStorage.getItem('DATA')
+        var DATA = JSON.parse(array);
+        var tempData = [];
+        for (var index = 0; index < DATA.length; index++) {
+            if (DATA[index].phonenumber == phone) {
+                tempData.push(DATA[index]);
+            }
+        }
+        setobj(tempData)
+        let post = await AsyncStorage.getItem('post')
+        let array1 = []
+        let array2 = []
+        if (post) {
+            array1 = JSON.parse(post)
+            array2 = array1.concat(DATA);
+        } else {
+            array2 = DATA
+        }
+        setData(array2)
+        await AsyncStorage.setItem('DATA', JSON.stringify(array2))
+    }
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        fetchData()
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
+    useEffect(() => {
+        fetchData()
+>>>>>>> 66c1477ab6f7af9aa42b1ba65f3f8cfeceb163fe
     }, [])
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView>
+            <ScrollView
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
+
+            >
                 <View style={styles.user}>
                     <TouchableOpacity
                         onPress={() => (navigation.navigate('Profile', {

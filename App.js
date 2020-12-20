@@ -12,6 +12,7 @@ import LoginStackScreen from './components/navigation/loginNavi';
 import VideoStackScreen from './components/navigation/videoNavi';
 import NotiStackScreen from './components/navigation/notificationNavi';
 import MenuStackScreen from './components/navigation/menuNavi';
+import { Root } from "native-base";
 
 
 const Tab = createBottomTabNavigator();
@@ -82,11 +83,13 @@ function MyTabs() {
 const rootStack = createStackNavigator();
 export default function App() {
   return (
-    <NavigationContainer>
+    <Root>
+      <NavigationContainer>
       <rootStack.Navigator headerMode="none">
         <rootStack.Screen name="Login" component={LoginStackScreen} />
         <rootStack.Screen name="MainTab" component={MyTabs} />
       </rootStack.Navigator>
     </NavigationContainer>
+    </Root>
   );
 }

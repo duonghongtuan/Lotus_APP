@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Image } from 'react-native';
 import ListMenu from './listMenu';
 
+
+
 export default class Menu extends Component {
     render() {
         return (
@@ -11,8 +13,8 @@ export default class Menu extends Component {
                         <Image style={styles.imageAvater} source={require('../images/logo.png')} />
                     </View>
                     <View>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 30 }}>
-                            Lotus
+                        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 80 }}>
+                            No Name
                         </Text>
                     </View>
                 </View>
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
         borderRadius: 40
     },
     avatar: {
-        width: "30%",
+        width: "80%",
         alignItems: "center",
         justifyContent: "center"
     },
