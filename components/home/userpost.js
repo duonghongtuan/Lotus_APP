@@ -4,13 +4,14 @@ import { useNavigation } from '@react-navigation/native'
 import DATA from '../posts/data'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import moment from 'moment';
 
 export default function UserPost({ image }) {
     const [text, setText] = useState('')
     const navigation = useNavigation()
     const [obj, setobj] = useState([{}])
     var date = new Date()
-    var id = date.getDate()+"id"+date.getHours()+date.getMinutes()+date.getSeconds()
+    var id = date.getDate() + "id" + date.getHours() + date.getMinutes() + date.getSeconds()
     useEffect(() => {
         async function fetchData() {
             let phone = await AsyncStorage.getItem('phonenumber')
@@ -37,11 +38,12 @@ export default function UserPost({ image }) {
             imagePost: image,
             avatar: obj[0].avatar,
             video: '',
+            dateTime: moment(),
         }]
         setText('')
-        image=''
-        await AsyncStorage.setItem('post', JSON.stringify(array)) 
-        navigation.navigate('Lotus',{
+        image = ''
+        await AsyncStorage.setItem('post', JSON.stringify(array))
+        navigation.navigate('Lotus', {
             load: 'load'
         })
     }

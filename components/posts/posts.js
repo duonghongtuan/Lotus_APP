@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import IconFont from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native'
+import moment from 'moment';
 
 export default function Item({ item }) {
   const navigation = useNavigation()
@@ -25,8 +26,8 @@ export default function Item({ item }) {
       name: item.username
     })
   }
-  const goCommet=()=>{
-    navigation.navigate('CommentPost',{
+  const goCommet = () => {
+    navigation.navigate('CommentPost', {
       avatar: item.avatar,
       name: item.username,
       id: item.id
@@ -96,15 +97,23 @@ export default function Item({ item }) {
 
       <View style={styles.user}>
         <TouchableOpacity
-        style={{flex: 2}}
+          style={{ flex: 2 }}
           onPress={goProfile}>
-          <View style={{flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.avatar}>
               <Image style={styles.imageAvater} source={{ uri: item.avatar }} />
             </View>
-            <Text style={styles.username}>
-              {item.username}
-            </Text>
+            <View>
+              <Text style={styles.username}>
+                {item.username}
+              </Text>
+              <Text style={styles.time}>
+                {console.log(moment())}
+                {
+                  moment().diff(item.dateTime, 'hours') < 23 ? moment(item.dateTime).fromNow() : moment(item.dateTime).format('llll')
+                }
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.edit}
@@ -125,7 +134,7 @@ export default function Item({ item }) {
       <View style={styles.total}>
         <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
         <Text style={{ fontSize: 18 }}>{item.totalLike}</Text>
-        <Text style={{ fontSize: 18, marginLeft: 200 }}>{item.comments?item.comments.length: "0"} bình luận</Text>
+        <Text style={{ fontSize: 18, marginLeft: 200 }}>{item.comments ? item.comments.length : "0"} bình luận</Text>
       </View>
       <View style={styles.postBottom}>
         <TouchableOpacity onPress={onChange}>
@@ -134,7 +143,7 @@ export default function Item({ item }) {
             <Text style={{ fontSize: 17, marginLeft: 10, color: color }}>Thích</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={goCommet}
         >
           <View style={styles.like}>
@@ -185,6 +194,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginRight: 20
 
+  },
+  time: {
+    fontSize: 14,
+    color: '#808080',
+    paddingLeft: 10,
   },
   post: {
     padding: 20,

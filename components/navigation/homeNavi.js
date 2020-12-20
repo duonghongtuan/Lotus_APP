@@ -32,7 +32,6 @@ export default function HomeStackScreen() {
     const navigation = useNavigation()
     return (
         <HomeStack.Navigator initialRouteName="Lotus">
-
             <HomeStack.Screen name="Lotus"
                 component={HomeScreen}
                 options={{
@@ -49,7 +48,7 @@ export default function HomeStackScreen() {
                             />
                             <Icon.Button
                                 name='message1'
-                                onPress={() => alert('This is a message!')}
+                                onPress={() => navigation.navigate('Messenger')}
                                 title="Info"
                                 backgroundColor="#fff"
                                 color="black"

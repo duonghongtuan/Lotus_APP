@@ -1,27 +1,50 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import ListMenu from './listMenu';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native'
 
-export default class Menu extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.user}>
-                    <View style={styles.avatar}>
-                        <Image style={styles.imageAvater} source={require('../images/user.png')} />
-                    </View>
-                    <View>
-                        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 80 }}>
-                            No Name
-                        </Text>
-                    </View>
-                </View>
-                <View style={styles.listMenu}>
+export default function Menu() {
+    const navigation = useNavigation()
+    const [obj, setobj] = useState([{}])
+    useEffect(() => {
+        async function fetchData() {
+            let array = await AsyncStorage.getItem('DATA')
+            let DATA = JSON.parse(array);
+            let phone = await AsyncStorage.getItem('phonenumber')
+            var tempData = [];
+            for (var index = 0; index < DATA.length; index++) {
+                if (DATA[index].phonenumber == phone) {
+                    tempData.push(DATA[index]);
+                }
+            }
+            setobj(tempData)
+        }
+        fetchData();
 
+    }, [])
+    return (
+        <View style={styles.container}>
+            <TouchableOpacity  style={styles.user}
+            onPress={() => (navigation.navigate('Profile', {
+                name: obj[0].username
+            }))}
+            >
+                <View style={styles.avatar}>
+                    <Image style={styles.imageAvater} source={{ uri: obj[0].avatar }} />
                 </View>
-                <View></View>
+                <View>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                        {obj[0].username}
+                    </Text>
+                </View>           
+            </TouchableOpacity>
+            <View style={styles.listMenu}>
+                <ListMenu />
             </View>
-        )
-    }
+            <View></View>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
@@ -32,19 +55,20 @@ const styles = StyleSheet.create({
     },
     user: {
         flex: 2,
-        flexDirection: "row"
-    },
-    imageAvater: {
-        width: 80,
-        height: 80,
-        borderRadius: 40
+        flexDirection: "row",
+        alignItems: "center",
     },
     avatar: {
-        width: "80%",
-        alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        padding: 30
     },
+    imageAvater: {
+        width: 70,
+        height: 70,
+        borderRadius: 35
+    },
+
     listMenu: {
-        flex: 8
+        flex: 10,
     }
 })

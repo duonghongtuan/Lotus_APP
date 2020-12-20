@@ -8,11 +8,11 @@ import Octicon from 'react-native-vector-icons/Octicons'
 import Entyicon from 'react-native-vector-icons/Entypo'
 import CreatePost from './components/home/creatPost'
 import HomeStackScreen from './components/navigation/homeNavi';
-import LoginStackScreen from './components/navigation/loginNavi';
 import VideoStackScreen from './components/navigation/videoNavi';
 import NotiStackScreen from './components/navigation/notificationNavi';
 import MenuStackScreen from './components/navigation/menuNavi';
 import { Root } from "native-base";
+import NavigateStackScreen from './components/navigation/Navigate';
 
 
 const Tab = createBottomTabNavigator();
@@ -86,7 +86,7 @@ export default function App() {
     <Root>
       <NavigationContainer>
       <rootStack.Navigator headerMode="none">
-        <rootStack.Screen name="Login" component={LoginStackScreen} />
+        <rootStack.Screen name="Navigate" component={NavigateStackScreen} />
         <rootStack.Screen name="MainTab" component={MyTabs} />
       </rootStack.Navigator>
     </NavigationContainer>
