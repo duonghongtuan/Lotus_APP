@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from 'moment';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign'
 import Octicon from 'react-native-vector-icons/Octicons'
@@ -25,8 +26,8 @@ export default function Item({ item }) {
       name: item.username
     })
   }
-  const goCommet=()=>{
-    navigation.navigate('CommentPost',{
+  const goCommet = () => {
+    navigation.navigate('CommentPost', {
       avatar: item.avatar,
       name: item.username,
       id: item.id
@@ -96,15 +97,23 @@ export default function Item({ item }) {
 
       <View style={styles.user}>
         <TouchableOpacity
-        style={{flex: 2}}
+          style={{ flex: 2 }}
           onPress={goProfile}>
-          <View style={{flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.avatar}>
               <Image style={styles.imageAvater} source={{ uri: item.avatar }} />
             </View>
-            <Text style={styles.username}>
-              {item.username}
-            </Text>
+            <View>
+              <Text style={styles.username}>
+                {item.username}
+              </Text>
+              <Text style={styles.time}>
+                {console.log(moment())}
+                {
+                  moment().diff(item.dateTime, 'hours') < 23 ? moment(item.dateTime).fromNow() : moment(item.dateTime).format('llll')
+                }
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.edit}
@@ -134,7 +143,7 @@ export default function Item({ item }) {
             <Text style={{ fontSize: 17, marginLeft: 10, color: color }}>Thích</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={goCommet}
         >
           <View style={styles.like}>
@@ -240,5 +249,11 @@ const styles = StyleSheet.create({
   },
   text01: {
     fontSize: 20,
+  },
+
+  time: {
+    fontSize: 13,
+    color: '#808080',
+    paddingLeft: 10,
   }
 });

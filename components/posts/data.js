@@ -10,6 +10,7 @@ var DATA = [
         imagePost: "https://baodansinh.mediacdn.vn/2020/11/6/photo-1604658851211-16046588557581410382138.jpg",
         avatar: "https://baodansinh.mediacdn.vn/2020/11/6/photo-1604658851211-16046588557581410382138.jpg",
         video:'',
+        dateTime: '2020-12-20T07:06:28.624Z',
     },
     {
         id: "1",
@@ -22,6 +23,7 @@ var DATA = [
         coverImage: "https://apsachieveonline.org/wp-content/uploads/2020/01/Camurdyaj-tri-hoan-Iron-Man-VR-mot-lan-nua-Co.jpg",
         avatar: "https://znews-photo.zadn.vn/w660/Uploaded/mdf_rkxrxd/2019_05_02/iron_man_1.jpg",
         video:'',
+        dateTime: '2020-12-20T07:03:28.624Z',
     },
     {
         id: "13",
@@ -34,6 +36,7 @@ var DATA = [
         avatar: "https://photo-zmp3.zadn.vn/avatars/0/7/2/f/072fc82083bbf30a171de034a71b3dbb.jpg",
         coverImage: "https://icapi.org/wp-content/uploads/2019/10/hinh-nen-anime-cho-may-tinh-94.jpg",
         video: '',
+        dateTime: '2020-12-18T07:06:28.624Z',
     },
     {
         id: "14",
@@ -46,6 +49,7 @@ var DATA = [
         avatar: "https://static2.yan.vn/YanNews/2167221/201905/tieu-su-su-nghiep-va-cuoc-doi-cua-ca-si-min-f0ea35dc.jpg",
         coverImage: "https://i.ytimg.com/vi/0R8IbpKXavM/sddefault.jpg",
         video: '',
+        dateTime: '2020-12-20T07:06:20.624Z',
     },
     {
         id: "1s",
@@ -58,6 +62,7 @@ var DATA = [
         avatar: "https://vtv1.mediacdn.vn/thumb_w/650/2019/8/26/69494009400154943152580015494244680001-vs-15667900255311947342930.jpg",
         coverImage: "https://genk.mediacdn.vn/2019/8/21/2-15663798668541257172509.jpg",
         video:'',
+        dateTime: '2020-12-20T07:06:28.624Z',
     },
     {
         id: "1dsgb",
@@ -70,6 +75,7 @@ var DATA = [
         avatar: "https://baodansinh.mediacdn.vn/2020/11/6/photo-1604658851211-16046588557581410382138.jpg",
         coverImage: "",
         video:'',
+        dateTime: '2020-12-18T07:06:28.624Z',
     },   
 ]
 export default DATA

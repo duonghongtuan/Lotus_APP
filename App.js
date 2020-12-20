@@ -84,7 +84,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <rootStack.Navigator headerMode="none">
-        {/* <rootStack.Screen name="Login" component={LoginStackScreen} /> */}
+        <rootStack.Screen name="Login" component={LoginStackScreen} />
         <rootStack.Screen name="MainTab" component={MyTabs} />
       </rootStack.Navigator>
     </NavigationContainer>
