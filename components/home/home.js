@@ -38,9 +38,13 @@ const HomeScreen = ({ route }) => {
         let post = await AsyncStorage.getItem('post')
         let array1 = []
         let array2 = []
-        if (post) {
+        if(post){
             array1 = JSON.parse(post)
-            array2 = array1.concat(DATA);
+            if (array1[0].id != DATA[0].id) {
+                array2 = array1.concat(DATA)
+            }else{
+                array2 = DATA
+            }
         } else {
             array2 = DATA
         }

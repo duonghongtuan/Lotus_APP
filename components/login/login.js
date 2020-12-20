@@ -23,6 +23,7 @@ const Login = () => {
 
     }, [])
     const login = async () => {
+        // console.log(DATA[0].comments)
         for (var index = 0; index < DATA.length; index++) {
             if ((DATA[index].phonenumber === phonenumber) & (DATA[index].password === password)) {
                 try {

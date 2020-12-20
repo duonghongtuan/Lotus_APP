@@ -12,6 +12,7 @@ import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native'
 import Feather from 'react-native-vector-icons/Feather'
 import DATA from '../posts/data'
+import { FlatList } from 'react-native-gesture-handler';
 
 const Friend = ({item}) => {
     const navigation = useNavigation()
@@ -50,7 +51,7 @@ export default function ListFriends() {
         setSearch(search);
       };
     return (
-        <ScrollView>
+        <View>
             <View>
                 <SearchBar
                     placeholder="Tìm kiếm bạn bè"
@@ -69,10 +70,12 @@ export default function ListFriends() {
                     <Text style={{fontSize: 18, color: '#f1538e', marginRight: 20}}>Sắp xếp</Text>
                 </View>
             </View>
+            <ScrollView>
             {DATA.map((item, index) => (
                     <Friend item={item} key={index} />
                 ))}
-        </ScrollView>
+            </ScrollView>           
+        </View>
     )
 }
 const styles = StyleSheet.create({

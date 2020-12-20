@@ -125,7 +125,7 @@ export default function Item({ item }) {
       <View style={styles.total}>
         <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
         <Text style={{ fontSize: 18 }}>{item.totalLike}</Text>
-        <Text style={{ fontSize: 18, marginLeft: 200 }}>0 bình luận</Text>
+        <Text style={{ fontSize: 18, marginLeft: 200 }}>{item.comments?item.comments.length: "0"} bình luận</Text>
       </View>
       <View style={styles.postBottom}>
         <TouchableOpacity onPress={onChange}>
