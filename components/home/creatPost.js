@@ -11,7 +11,6 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import UserPost from './userpost.js'
 
-
 export default class CreatePost extends Component {
     // ảnh    
     constructor(props) {
@@ -27,16 +26,20 @@ export default class CreatePost extends Component {
     }
 
     render() {
+
+        console.log(this.state.avatarSource)
         let img = this.state.avatarSource == null ? null :
             <Image
-                source={this.state.avatarSource}
-                style={{ height: 200, width: 200 }}
+            source={{uri:this.state.avatarSource}}
+                style={{ height: 300, width: 400 }}
                 resizeMode="contain"
             />
         return (
             <View style={styles.container}>
-                <UserPost />
+                <UserPost image={this.state.avatarSource}/>
+                <View style={{ alignItems: "center", marginTop: 40 }}>
                     {img}
+                </View>
                 <View style={styles.listpost}>
                     <Modal
                         transparent={true}
@@ -45,7 +48,7 @@ export default class CreatePost extends Component {
                         <View style={{ flex: 1 }}>
                             <View style={{ marginTop: 400, padding: 20, backgroundColor: '#ffff', height: 210 }}>
                                 <TouchableOpacity
-                                    style={{alignItems: 'center'}}
+                                    style={{ alignItems: 'center' }}
                                     onPress={() => {
                                         this.setState({ modalVisible: false })
                                     }}
@@ -57,8 +60,26 @@ export default class CreatePost extends Component {
                                     onPress={this.Show.bind(this)}
                                 >
                                     <Ionicons name="image-outline" size={30} color="green" />
-                                    <Text style={{ marginTop: 5, marginLeft: 20 }}>
+                                    <Text style={styles.texticon}>
                                         Ảnh
+                                </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.buttonImage}
+                                    onPress={this.Show.bind(this)}
+                                >
+                                    <Ionicons style={styles.icon} name="videocam" size={30} color="#f1538e" />
+                                    <Text style={styles.texticon}>
+                                        Video
+                                </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.buttonImage}
+                                    onPress={this.Show.bind(this)}
+                                >
+                                    <Icon style={styles.icon} name="smile-circle" size={30} color="yellow" />
+                                    <Text style={styles.texticon}>
+                                        Cảm xúc
                                 </Text>
                                 </TouchableOpacity>
                             </View>
@@ -73,9 +94,9 @@ export default class CreatePost extends Component {
                     }}
                 >
                     <View style={styles.bottom}>
-                        <Ionicons style={styles.icon} name="image-outline" size={30} color="green" />
-                        <Ionicons style={styles.icon} name="videocam" size={30} color="#f1538e" />
-                        <Icon style={styles.icon} name="smile-circle" size={30} color="yellow" />
+                        <Ionicons style={styles.icons} name="image-outline" size={30} color="green" />
+                        <Ionicons style={styles.icons} name="videocam" size={30} color="#f1538e" />
+                        <Icon style={styles.icons} name="smile-circle" size={30} color="yellow" />
                     </View>
                 </TouchableHighlight>
             </View>
@@ -98,9 +119,14 @@ const styles = StyleSheet.create({
         flex: 4,
     },
     buttonImage: {
-        flexDirection: "row"
+        flexDirection: "row",
+        marginBottom: 20
     },
-    icon: {
+    icons: {
+        marginRight: 30
+    },
+    texticon: {
+        fontSize: 20,
         marginLeft: 20
     },
     bottom: {

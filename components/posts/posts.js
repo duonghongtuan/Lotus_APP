@@ -25,6 +25,13 @@ export default function Item({ item }) {
       name: item.username
     })
   }
+  const goCommet=()=>{
+    navigation.navigate('CommentPost',{
+      avatar: item.avatar,
+      name: item.username,
+      id: item.id
+    })
+  }
   return (
     <View>
 
@@ -89,8 +96,9 @@ export default function Item({ item }) {
 
       <View style={styles.user}>
         <TouchableOpacity
+        style={{flex: 2}}
           onPress={goProfile}>
-          <View style={{ flex: 4, flexDirection: 'row' }}>
+          <View style={{flexDirection: 'row' }}>
             <View style={styles.avatar}>
               <Image style={styles.imageAvater} source={{ uri: item.avatar }} />
             </View>
@@ -126,7 +134,9 @@ export default function Item({ item }) {
             <Text style={{ fontSize: 17, marginLeft: 10, color: color }}>Thích</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity  >
+        <TouchableOpacity 
+          onPress={goCommet}
+        >
           <View style={styles.like}>
             <Octicon style={styles.icon} name="comment" size={30} />
             <Text style={{ fontSize: 17, marginLeft: 10, color: "#777777" }}>Bình luận</Text>
@@ -151,7 +161,6 @@ const styles = StyleSheet.create({
   },
   user: {
     marginTop: 10,
-    flex: 2,
     flexDirection: "row"
   },
   username: {
@@ -182,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 17
   },
   imagePost: {
-    height: 200
+    height: 300
   },
   total: {
     flexDirection: 'row',

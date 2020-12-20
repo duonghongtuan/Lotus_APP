@@ -11,14 +11,14 @@ export default function AvartarProfile({data}) {
         <View>
             <View >
                 <View style={styles.cover}>
-                    <ImageBackground style={styles.coverImage} source={{ uri: data.avatar}} >
+                    <ImageBackground style={styles.coverImage} source={{ uri: data.coverImage}} >
                         <View style={styles.camera}>
                             <Icon name="camera" size={20} />
                         </View>
                     </ImageBackground>
                 </View>
                 <View style={styles.avatar}>
-                    <Image style={styles.avatarImage} source={{ uri:data.imagePost}} />
+                    <Image style={styles.avatarImage} source={{ uri:data.avatar}} />
                     <View style={styles.cameraAvatar}>
                         <Icon name="camera" size={20} />
                     </View>
