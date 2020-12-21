@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Profile({ route }) {
     const navigation = useNavigation()
     const [obj, setobj] = useState([{}])
+    const [index, setIndex] = useState(0)
 
     useEffect(() => {
         async function fetchData() {
@@ -17,37 +18,32 @@ export default function Profile({ route }) {
             let DATA = JSON.parse(data);
             let name = route.params.name
             var tempData = [];
-            for (var index = 0; index < DATA.length; index++) {
-                if (DATA[index].username == name) {
-                    tempData.push(DATA[index]);
+            let x=0
+            for (var i = 0; i < DATA.length; i++) {
+                if (DATA[i].username == name) {
+                    tempData.push(DATA[i]);
+                    x=i
                 }
             }
+            setIndex(x)
             setobj(tempData)
         }
         fetchData();
-        // const name = route.params.name
-        // var tempData = [];
-        // for (var index = 0; index < DATA.length; index++) {
-        //     if (DATA[index].username == name) {
-        //         tempData.push(DATA[index]);
-        //     }
-        // }
-        // setobj(tempData)
-        // console.log(obj)
     }, [])
     return (
         <View style={styles.container}>
             <ScrollView>
-
-                <AvartarProfile data={obj[0]} />
-
+                <AvartarProfile data={obj[0]} index={index} />
                 <FriendProfile />
                 <View style={styles.user}>
                     <TouchableOpacity
                         onPress={() => (navigation.navigate('Profile'))}
                     >
-                        <Image style={styles.imageAvater}
-                            source={{ uri: obj[0].avatar }} />
+                        {obj[0] ?
+                            <Image style={styles.imageAvater}
+                                source={{ uri: obj[0].avatar }} />
+                            : null}
+
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.writepost}

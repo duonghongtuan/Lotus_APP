@@ -1,27 +1,75 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, Image, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Entypo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import IconFont from 'react-native-vector-icons/FontAwesome'
+import pick from '../api/picker.js'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function AvartarProfile({data}) {
-    console.log(data)
+export default function AvartarProfile({ data, index }) {
+    const [avatar, setAvatar] = useState(null)
+    const [coverImage, setCoverImage] = useState(null)
+
+    const changeCoverImg = () => {
+        pick(async (source) => {
+            setCoverImage(source)
+            let DATA = await AsyncStorage.getItem('DATA')
+            let array = JSON.parse(DATA)
+            array[index].coverImage = source
+            await AsyncStorage.setItem('DATA', JSON.stringify(array))
+        })
+    }
+    const changeAvatar = () => {
+        pick(async (source) => {
+            setAvatar(source)
+            let DATA = await AsyncStorage.getItem('DATA')
+            let array = JSON.parse(DATA)
+            array[index].avatar = source
+            await AsyncStorage.setItem('DATA', JSON.stringify(array))
+        })
+    }
     return (
         <View>
             <View >
                 <View style={styles.cover}>
-                    <ImageBackground style={styles.coverImage} source={{ uri: data.coverImage}} >
-                        <View style={styles.camera}>
-                            <Icon name="camera" size={20} />
-                        </View>
+                    {coverImage ? <ImageBackground style={styles.coverImage} source={{ uri: coverImage }} >
+                        <TouchableOpacity
+                            onPress={changeCoverImg}
+                        >
+                            <View style={styles.camera}>
+                                <Icon name="camera" size={20} />
+                            </View>
+                        </TouchableOpacity>
                     </ImageBackground>
+                        :
+                        <ImageBackground style={styles.coverImage} source={{ uri: data.coverImage }} >
+                            <TouchableOpacity
+                                onPress={changeCoverImg}
+                            >
+                                <View style={styles.camera}>
+                                    <Icon name="camera" size={20} />
+                                </View>
+                            </TouchableOpacity>
+                        </ImageBackground>}
+
                 </View>
                 <View style={styles.avatar}>
-                    <Image style={styles.avatarImage} source={{ uri:data.avatar}} />
-                    <View style={styles.cameraAvatar}>
-                        <Icon name="camera" size={20} />
-                    </View>
+                    {avatar ?
+                        <TouchableOpacity onPress={changeAvatar}>
+                            <Image style={styles.avatarImage} source={{ uri: avatar }} />
+                            <View style={styles.cameraAvatar}>
+                                <Icon name="camera" size={20} />
+                            </View>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity onPress={changeAvatar}>
+                            <Image style={styles.avatarImage} source={{ uri: data.avatar }} />
+                            <View style={styles.cameraAvatar}>
+                                <Icon name="camera" size={20} />
+                            </View>
+                        </TouchableOpacity>}
+
                 </View>
             </View>
             <View style={{ alignItems: 'center', marginTop: 30 }}>
@@ -52,7 +100,7 @@ export default function AvartarProfile({data}) {
                 <Text style={{ fontWeight: 'bold', fontSize: 15 }}> Hà Nội</Text>
             </View>
             <View style={styles.editinfo}>
-                <Text style={{fontSize: 18, color: '#0000BB'}}>
+                <Text style={{ fontSize: 18, color: '#0000BB' }}>
                     Chỉnh sửa chi tiết công khai</Text>
             </View>
         </View>

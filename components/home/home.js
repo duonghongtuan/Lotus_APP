@@ -3,7 +3,6 @@ import {
     View, Image, Text, SafeAreaView,
     TouchableOpacity,
     StyleSheet,
-    Animated,
     RefreshControl,
     ScrollView
 }
@@ -48,8 +47,8 @@ const HomeScreen = ({ route }) => {
         } else {
             array2 = DATA
         }
-        setData(array2)
         await AsyncStorage.setItem('DATA', JSON.stringify(array2))
+        setData(array2)
     }
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
@@ -85,7 +84,7 @@ const HomeScreen = ({ route }) => {
                 </View>
                 <Stories />
                 {data.map((item, index) => (
-                    <Item item={item} key={index} ></Item>
+                    <Item item={item} key={index} i={index} ></Item>
                 ))}
             </ScrollView>
         </SafeAreaView>

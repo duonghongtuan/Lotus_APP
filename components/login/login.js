@@ -6,9 +6,8 @@ import {
     Image,
     TouchableOpacity,
     Button,
-    TextInput
+    TextInput,
 } from 'react-native';
-import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DATA from '../posts/data'
@@ -18,36 +17,46 @@ const Login = () => {
     const [phonenumber, setPhonenumber] = useState("");
     const [password, setPassword] = useState("")
     const navigation = useNavigation()
-
+    const [array, setArray] = useState([{}])
     useEffect(() => {
-
+        async function fetchData() {
+            let data = await AsyncStorage.getItem('DATA')
+            let array1 = []
+            if (data) {
+                array1 = JSON.parse(data)
+            } else {
+                array1 = DATA
+            }
+            setArray(array1)
+        }
+        fetchData()
     }, [])
     const login = async () => {
-        // console.log(DATA[0].comments)
-        for (var index = 0; index < DATA.length; index++) {
-            if ((DATA[index].phonenumber === phonenumber) & (DATA[index].password === password)) {
+        
+        for (var index = 0; index < array.length; index++) {
+            if ((array[index].phonenumber === phonenumber) & (array[index].password === password)) {
                 try {
-                    await AsyncStorage.clear()
-                    await AsyncStorage.setItem('DATA', JSON.stringify(DATA))
+                    //await AsyncStorage.clear()
+                    await AsyncStorage.setItem('DATA', JSON.stringify(array))
                     await AsyncStorage.setItem('phonenumber', phonenumber)
                     return navigation.navigate('MainTab')
                 } catch (error) {
                     console.log(error)
                 }
-            }else {
-                Toast.show({
-                    text: "Bạn đã nhập sai",
-                    buttonText: "Okay"
-                })
-            }
-
-            if ((phonenumber == '') | (password == '')) {
-                Toast.show({
-                    text: "Xin hãy nhập thông tin",
-                    buttonText: "Okay"
-                })
-            }
+            } 
+        }       
+        if ((phonenumber == '') | (password == '')) {
+            Toast.show({
+                text: "Xin hãy nhập thông tin",
+                buttonText: "Okay"
+            })
+        }else {
+            Toast.show({
+                text: "Bạn đã nhập sai",
+                buttonText: "Okay"
+            })
         }
+
     }
 
     return (

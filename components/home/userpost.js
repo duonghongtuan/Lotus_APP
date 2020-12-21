@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import DATA from '../posts/data'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
@@ -14,6 +13,8 @@ export default function UserPost({ image }) {
     var id = date.getDate() + "id" + date.getHours() + date.getMinutes() + date.getSeconds()
     useEffect(() => {
         async function fetchData() {
+            let array = await AsyncStorage.getItem('DATA')
+            let DATA = JSON.parse(array);
             let phone = await AsyncStorage.getItem('phonenumber')
             var tempData = [];
             for (var index = 0; index < DATA.length; index++) {
@@ -30,7 +31,7 @@ export default function UserPost({ image }) {
         let array = [{
             id: id,
             username: obj[0].username,
-            totalLike: 10,
+            totalLike: 0,
             password: "",
             phonenumber: obj[0].phonenumber,
             post: text,

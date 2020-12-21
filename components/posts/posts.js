@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Image, Modal } from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign'
 import Octicon from 'react-native-vector-icons/Octicons'
@@ -7,17 +7,24 @@ import Feather from 'react-native-vector-icons/Feather'
 import IconFont from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Item({ item }) {
+export default function Item({ item, i }) {
   const navigation = useNavigation()
   const [like, setLike] = useState(true)
   const [color, setColor] = useState('#777777')
   const [modal, setModal] = useState(false)
+
+  useEffect(() => {
+
+  }, [])
   const onChange = () => {
     setLike(!like)
     if (like === true) {
+      item.totalLike++
       setColor("#0000FF")
     } else {
+      item.totalLike--
       setColor('#777777')
     }
   }
@@ -32,6 +39,13 @@ export default function Item({ item }) {
       name: item.username,
       id: item.id
     })
+  }
+  const deletePost = async () => {
+    let DATA = await AsyncStorage.getItem('DATA')
+    let array = JSON.parse(DATA)
+    array.splice(i, 1)
+    await AsyncStorage.setItem('DATA', JSON.stringify(array))
+    setModal(!modal)
   }
   return (
     <View>
@@ -73,12 +87,13 @@ export default function Item({ item }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.listModal}
+            onPress={deletePost}
           >
             <View style={styles.iconModal}>
               <Icon name="closesquareo" size={30} />
             </View>
             <View style={styles.text00}>
-              <Text style={styles.text01}>Ẩn bài viết</Text>
+              <Text style={styles.text01}>Xóa bài viết</Text>
               <Text style={styles.text02}>Ẩn bớt các bài viết tương tự</Text>
             </View>
           </TouchableOpacity>
@@ -108,7 +123,6 @@ export default function Item({ item }) {
                 {item.username}
               </Text>
               <Text style={styles.time}>
-                {console.log(moment())}
                 {
                   moment().diff(item.dateTime, 'hours') < 23 ? moment(item.dateTime).fromNow() : moment(item.dateTime).format('llll')
                 }
@@ -132,9 +146,13 @@ export default function Item({ item }) {
         : null
       }
       <View style={styles.total}>
-        <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
-        <Text style={{ fontSize: 18 }}>{item.totalLike}</Text>
-        <Text style={{ fontSize: 18, marginLeft: 200 }}>{item.comments ? item.comments.length : "0"} bình luận</Text>
+        <View style={styles.totallike}>
+          <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
+          <Text style={{ fontSize: 18, marginLeft: 5 }}>{item.totalLike}</Text>
+        </View>
+        <View style={styles.totalComment}>
+          <Text style={{ fontSize: 18 }}>{item.comments ? item.comments.length : "0"} bình luận</Text>
+        </View>
       </View>
       <View style={styles.postBottom}>
         <TouchableOpacity onPress={onChange}>
@@ -199,6 +217,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#808080',
     paddingLeft: 10,
+  },
+  totallike: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  totalComment: {
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: "center",
+    marginRight: 20
   },
   post: {
     padding: 20,

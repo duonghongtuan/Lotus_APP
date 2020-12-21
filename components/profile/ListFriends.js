@@ -64,7 +64,7 @@ export default function ListFriends() {
             </View>
             <View style={{flexDirection: 'row'}}>
                 <View style={styles.total}>
-                    <Text style={{fontSize: 20}}>99 người bạn</Text>
+                    <Text style={{fontSize: 20}}>{DATA.length} người bạn</Text>
                 </View>
                 <View>
                     <Text style={{fontSize: 18, color: '#f1538e', marginRight: 20}}>Sắp xếp</Text>

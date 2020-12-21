@@ -66,7 +66,6 @@ export default class CreatePost extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.buttonImage}
-                                    onPress={this.Show.bind(this)}
                                 >
                                     <Ionicons style={styles.icon} name="videocam" size={30} color="#f1538e" />
                                     <Text style={styles.texticon}>
@@ -75,7 +74,6 @@ export default class CreatePost extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={styles.buttonImage}
-                                    onPress={this.Show.bind(this)}
                                 >
                                     <Icon style={styles.icon} name="smile-circle" size={30} color="yellow" />
                                     <Text style={styles.texticon}>
