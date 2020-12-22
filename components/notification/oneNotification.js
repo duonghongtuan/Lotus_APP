@@ -9,6 +9,10 @@ import {
     Text
 } from 'native-base';
 import avatar from '../images/logo.png';
+import avatarCat1 from '../images/avatar-cat-1.jpg';
+import avatarCat2 from '../images/avatar-cat-2.jpg';
+import avatarCat3 from '../images/avatar-cat-1.jpg';
+
 export default class OneNotification extends Component {
     render() {
         return (
@@ -27,10 +31,10 @@ export default class OneNotification extends Component {
                 </ListItem>
                 <ListItem avatar>
                     <Left>
-                        <Thumbnail source={avatar} />
+                        <Thumbnail source={avatarCat2} />
                     </Left>
                     <Body>
-                        <Text>Lotus vừa bình luận vào bài viết của bạn</Text>
+                        <Text>Cat vừa bình luận vào bài viết của bạn</Text>
                         <Text note>Doing what you like will always keep you happy . .</Text>
                     </Body>
                     <Right>

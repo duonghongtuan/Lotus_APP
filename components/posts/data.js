@@ -1,6 +1,6 @@
 var DATA = [
     {
-        id: "1d",
+        id: "1d", 
         username: "Min",
         totalLike: 10,
         password: "123456",
@@ -36,7 +36,7 @@ var DATA = [
                 comment: "helllo Tuấn"
             },
         ],
-        dateTime: '2020-12-21T07:06:28.624Z',
+        dateTime: '2020-12-21T07:05:28.624Z',
     },
     {
         id: "1",
@@ -56,7 +56,7 @@ var DATA = [
             },
             {
                 id: "1d",
-                comment: "helllo Hiệp"
+                comment: "helllo"
             },
             {
                 id: "13",
@@ -83,11 +83,11 @@ var DATA = [
             },
             {
                 id: "1d",
-                comment: "helllo Hiệp"
+                comment: "helllo Tuấn"
             },
             {
                 id: "13",
-                comment: "helllo Tuấn"
+                comment: "helllo Hiệp"
             },
             {
                 id: "1",
