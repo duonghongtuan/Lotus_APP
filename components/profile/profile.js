@@ -11,20 +11,23 @@ export default function Profile({ route }) {
     const navigation = useNavigation()
     const [obj, setobj] = useState([{}])
     const [index, setIndex] = useState(0)
+    const [name, setName] = useState('')
 
     useEffect(() => {
         async function fetchData() {
             let data = await AsyncStorage.getItem('DATA')
+            let username = await AsyncStorage.getItem('username')
             let DATA = JSON.parse(data);
             let name = route.params.name
             var tempData = [];
-            let x=0
+            let x = 0
             for (var i = 0; i < DATA.length; i++) {
                 if (DATA[i].username == name) {
                     tempData.push(DATA[i]);
-                    x=i
+                    x = i
                 }
             }
+            setName(username)
             setIndex(x)
             setobj(tempData)
         }
@@ -35,23 +38,27 @@ export default function Profile({ route }) {
             <ScrollView>
                 <AvartarProfile data={obj[0]} index={index} />
                 <FriendProfile />
-                <View style={styles.user}>
-                    <TouchableOpacity
-                        onPress={() => (navigation.navigate('Profile'))}
-                    >
-                        {obj[0] ?
-                            <Image style={styles.imageAvater}
-                                source={{ uri: obj[0].avatar }} />
-                            : null}
+                {name === obj[0].username ?
+                    <View style={styles.user}>
+                        <TouchableOpacity
+                            onPress={() => (navigation.navigate('Profile'))}
+                        >
+                            {obj[0] ?
+                                <Image style={styles.imageAvater}
+                                    source={{ uri: obj[0].avatar }} />
+                                : null}
 
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.writepost}
-                        onPress={() => navigation.navigate('CreatePost')}
-                    >
-                        <Text style={{ fontSize: 20 }}>Bạn đang nghĩ gì?</Text>
-                    </TouchableOpacity>
-                </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.writepost}
+                            onPress={() => navigation.navigate('CreatePost')}
+                        >
+                            <Text style={{ fontSize: 20 }}>Bạn đang nghĩ gì?</Text>
+                        </TouchableOpacity>
+                    </View>
+                    : null
+
+                }
                 {obj.map((item, index) => (
                     <Item item={item} key={index} />
                 ))}

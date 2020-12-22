@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import {
     Button,
     Image,
@@ -12,6 +12,7 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DATA from '../posts/data'
+import { Toast } from 'native-base';
 
 const Create = () => {
     const navigation = useNavigation()
@@ -20,7 +21,7 @@ const Create = () => {
     const [phonenumber, setPhonenumber] = useState("");
     const [birthday, setbirthday] = useState('')
     var date = new Date()
-    var id = date.getDate() + "id" + date.getHours() + date.getMinutes() + date.getSeconds()
+    const id = date.getDate() + "id" + date.getHours() + date.getMinutes() + date.getSeconds()
     const addProfile = async () => {
         let array = [{
             id: id,
@@ -28,19 +29,29 @@ const Create = () => {
             totalLike: '',
             password: password,
             phonenumber: phonenumber,
-            post: username+ ' đã tham gia vào LOTUS',
+            post: username + ' đã tham gia vào LOTUS',
             coverImage: 'https://scontent.fhan5-4.fna.fbcdn.net/v/t1.0-9/131594300_1798063953682872_4392273444146805285_n.jpg?_nc_cat=104&ccb=2&_nc_sid=730e14&_nc_ohc=3pZc-fqeX4oAX_l4lZM&_nc_ht=scontent.fhan5-4.fna&oh=f0a360cafa491731e6792cf00d462321&oe=60045D0C',
             imagePost: '',
             avatar: 'https://scontent.fhan5-2.fna.fbcdn.net/v/t1.0-9/131136768_1798062657016335_737043636929712195_n.jpg?_nc_cat=110&ccb=2&_nc_sid=730e14&_nc_ohc=ywClXZ0LB_IAX_ESDnC&_nc_ht=scontent.fhan5-2.fna&oh=f1cf7f6e38ec3635fd02f177fabe550b&oe=600588C6',
             video: '',
+            comments: [],
         }]
-        await AsyncStorage.clear()
-        let data = DATA.concat(array)
-        await AsyncStorage.setItem('DATA', JSON.stringify(data))
-        await AsyncStorage.setItem('phonenumber', phonenumber)
-        return navigation.navigate('MainTab')
+        if ((phonenumber!='') & (password !='')& (phonenumber !='')&(birthday!='')) {
+            //await AsyncStorage.clear()
+            let data = DATA.concat(array)
+            await AsyncStorage.setItem('DATA', JSON.stringify(data))
+            await AsyncStorage.setItem('id', id)
+            await AsyncStorage.setItem('username', username)
+            return navigation.navigate('MainTab')
+        }else {
+            Toast.show({
+                text: "Bạn chưa điền đủ",
+                buttonText: "Okay"
+            })
+        }
+
     }
-   
+
     return (
         <ScrollView style={{ backgroundColor: 'white' }}>
             <View style={styles.container}>
@@ -83,7 +94,7 @@ const Create = () => {
                         color="#de457d"
                         title="Create"
                         onPress={addProfile}
-                        
+
                     />
                 </View>
 

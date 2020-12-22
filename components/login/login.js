@@ -20,6 +20,7 @@ const Login = () => {
     const [array, setArray] = useState([{}])
     useEffect(() => {
         async function fetchData() {
+            //await AsyncStorage.removeItem('DATA')
             let data = await AsyncStorage.getItem('DATA')
             let array1 = []
             if (data) {
@@ -32,13 +33,12 @@ const Login = () => {
         fetchData()
     }, [])
     const login = async () => {
-        
         for (var index = 0; index < array.length; index++) {
             if ((array[index].phonenumber === phonenumber) & (array[index].password === password)) {
                 try {
-                    //await AsyncStorage.clear()
                     await AsyncStorage.setItem('DATA', JSON.stringify(array))
-                    await AsyncStorage.setItem('phonenumber', phonenumber)
+                    await AsyncStorage.setItem('id', array[index].id)
+                    await AsyncStorage.setItem('username', array[index].username)
                     return navigation.navigate('MainTab')
                 } catch (error) {
                     console.log(error)

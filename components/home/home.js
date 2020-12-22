@@ -24,12 +24,12 @@ const HomeScreen = ({ route }) => {
     const [refreshing, setRefreshing] = useState(false)
 
     async function fetchData() {
-        let phone = await AsyncStorage.getItem('phonenumber')
+        let id = await AsyncStorage.getItem('id')
         let array = await AsyncStorage.getItem('DATA')
         var DATA = JSON.parse(array);
         var tempData = [];
         for (var index = 0; index < DATA.length; index++) {
-            if (DATA[index].phonenumber == phone) {
+            if (DATA[index].id == id) {
                 tempData.push(DATA[index]);
             }
         }
@@ -39,11 +39,8 @@ const HomeScreen = ({ route }) => {
         let array2 = []
         if(post){
             array1 = JSON.parse(post)
-            if (array1[0].id != DATA[0].id) {
-                array2 = array1.concat(DATA)
-            }else{
-                array2 = DATA
-            }
+            array2 = array1.concat(DATA)
+            await AsyncStorage.removeItem('post')  
         } else {
             array2 = DATA
         }

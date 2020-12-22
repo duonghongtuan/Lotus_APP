@@ -10,11 +10,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Comments({ item }) {
     const [data, setData] = useState([{}])
     const navigation = useNavigation()
-    const goProfile = () => {
-        navigation.navigate('Profile', {
-            name: item.username
-        })
-    }
+    // const goProfile = () => {
+    //     navigation.navigate('Profile', {
+    //         name: item.username
+    //     })
+    // }
     useEffect(() => {
         async function fetchData() {
             let DATA = await AsyncStorage.getItem('DATA')
@@ -34,7 +34,8 @@ export default function Comments({ item }) {
         <View style={styles.container}>
             <View style={{ flex: 1 }}>
                 <TouchableOpacity
-                    onPress={goProfile}>
+                   // onPress={goProfile}
+                   >
                     <View style={styles.avatar}>
                         <Image style={styles.imageAvater} source={{ uri: data[0].avatar }} />
                     </View>

@@ -15,10 +15,10 @@ export default function UserPost({ image }) {
         async function fetchData() {
             let array = await AsyncStorage.getItem('DATA')
             let DATA = JSON.parse(array);
-            let phone = await AsyncStorage.getItem('phonenumber')
+            let ID = await AsyncStorage.getItem('id')
             var tempData = [];
             for (var index = 0; index < DATA.length; index++) {
-                if (DATA[index].phonenumber == phone) {
+                if (DATA[index].id == ID) {
                     tempData.push(DATA[index]);
                 }
             }
@@ -40,6 +40,7 @@ export default function UserPost({ image }) {
             avatar: obj[0].avatar,
             video: '',
             dateTime: moment(),
+            comments: [],
         }]
         setText('')
         image = ''

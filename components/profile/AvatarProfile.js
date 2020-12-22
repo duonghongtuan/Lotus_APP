@@ -6,10 +6,20 @@ import Feather from 'react-native-vector-icons/Feather'
 import IconFont from 'react-native-vector-icons/FontAwesome'
 import pick from '../api/picker.js'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Item from '../posts/posts.js'
 
 export default function AvartarProfile({ data, index }) {
     const [avatar, setAvatar] = useState(null)
     const [coverImage, setCoverImage] = useState(null)
+    const [name, setName] = useState('')
+
+    async function fetchData() {
+        let username = await AsyncStorage.getItem('username')
+        setName(username)
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     const changeCoverImg = () => {
         pick(async (source) => {
@@ -37,9 +47,10 @@ export default function AvartarProfile({ data, index }) {
                         <TouchableOpacity
                             onPress={changeCoverImg}
                         >
-                            <View style={styles.camera}>
-                                <Icon name="camera" size={20} />
-                            </View>
+                            {name === data.username ?
+                                <View style={styles.camera}>
+                                    <Icon name="camera" size={20} />
+                                </View> : null}
                         </TouchableOpacity>
                     </ImageBackground>
                         :
@@ -47,9 +58,10 @@ export default function AvartarProfile({ data, index }) {
                             <TouchableOpacity
                                 onPress={changeCoverImg}
                             >
-                                <View style={styles.camera}>
-                                    <Icon name="camera" size={20} />
-                                </View>
+                                {name === data.username ?
+                                    <View style={styles.camera}>
+                                        <Icon name="camera" size={20} />
+                                    </View> : null}
                             </TouchableOpacity>
                         </ImageBackground>}
 
@@ -58,16 +70,19 @@ export default function AvartarProfile({ data, index }) {
                     {avatar ?
                         <TouchableOpacity onPress={changeAvatar}>
                             <Image style={styles.avatarImage} source={{ uri: avatar }} />
-                            <View style={styles.cameraAvatar}>
-                                <Icon name="camera" size={20} />
-                            </View>
+                            {name === data.username ?
+                                <View style={styles.cameraAvatar}>
+                                    <Icon name="camera" size={20} />
+                                </View> : null}
+
                         </TouchableOpacity>
                         :
                         <TouchableOpacity onPress={changeAvatar}>
                             <Image style={styles.avatarImage} source={{ uri: data.avatar }} />
-                            <View style={styles.cameraAvatar}>
-                                <Icon name="camera" size={20} />
-                            </View>
+                            {name === data.username ?
+                                <View style={styles.cameraAvatar}>
+                                    <Icon name="camera" size={20} />
+                                </View> : null}
                         </TouchableOpacity>}
 
                 </View>

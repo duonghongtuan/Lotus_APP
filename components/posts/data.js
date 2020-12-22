@@ -67,7 +67,7 @@ var DATA = [
     },
     {
         id: "13",
-        username: "Đan trường",
+        username: "Đan Trường",
         password: "123456",
         phonenumber: "0865367922",
         totalLike: 50,
@@ -129,7 +129,7 @@ var DATA = [
     },
     {
         id: "14",
-        username: "Nguyen Tha Thu",
+        username: "Nguyễn Tha Thu",
         password: "123456",
         phonenumber: "0865367923",
         totalLike: 70,

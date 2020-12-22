@@ -21,23 +21,29 @@ export default function CommentPost({ route }) {
     const [modal, setModal] = useState(false)
     const [item, setItem] = useState([{}])
     const [text, setText] = useState('')
+    const [array, setArray] = useState([])
+    const [index, setIndex] = useState(null)
+
+    async function fetchData() {
+        let DATA = await AsyncStorage.getItem('DATA')
+        var tempData = JSON.parse(DATA);
+        setArray(tempData)
+        var data = []
+        const id = route.params.id
+        for (var index = 0; index < tempData.length; index++) {
+            if (tempData[index].id == id) {
+                data.push(tempData[index]);
+                setIndex(index)
+            }
+        }
+        setItem(data)
+        console.log(item)
+    }
 
     useEffect(() => {
-        async function fetchData() {
-            let DATA = await AsyncStorage.getItem('DATA')
-            const id = route.params.id
-            var tempData = JSON.parse(DATA);
-            var data = []
-            for (var index = 0; index < tempData.length; index++) {
-                if (tempData[index].id == id) {
-                    data.push(tempData[index]);
-                }
-            }
-            setItem(data)
-            console.log(item)
-        }
         fetchData();
     }, [])
+
     const onChange = () => {
         setLike(!like)
         if (like === true) {
@@ -46,10 +52,15 @@ export default function CommentPost({ route }) {
             setColor('#777777')
         }
     }
-    const goProfile = () => {
-        navigation.navigate('Profile', {
-            name: item.username
-        })
+
+    const comment = async () => {
+        let id = await AsyncStorage.getItem('id')
+        let array1 = [{ id: id, comment: text }]
+        let array2 = array[index].comments
+        let comments = array2.concat(array1)
+        array[index].comments = comments
+        await AsyncStorage.setItem('DATA', JSON.stringify(array))
+        fetchData()
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -160,14 +171,17 @@ export default function CommentPost({ route }) {
                         placeholder="Viết bình luận"
                         multiline={true}
                         style={styles.textinput}
+                        clearTextOnFocus={true}
                         onChangeText={text => {
                             setText(text)
                         }}
                     />
                     <Feather style={styles.icon} name="smile" size={30} />
                 </View>
-                <TouchableOpacity>
-                <Ionicons name="send" size={30} color="#f1538e" />
+                <TouchableOpacity
+                    onPress={comment}
+                >
+                    <Ionicons name="send" size={30} color="#f1538e" />
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

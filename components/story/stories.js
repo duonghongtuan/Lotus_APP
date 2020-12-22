@@ -22,7 +22,7 @@ export default function Stories() {
                         </TouchableOpacity>
                     </View>
                     {stories.map((item, index) => (
-                        <Story item={item} key={index} />
+                        <Story item={item} key={index} i={index}/>
                     ))}
                 </ScrollView>
             </View >

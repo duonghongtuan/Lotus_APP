@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Modal } from "react-native";
+import {
+  StyleSheet, View, Text,
+  TouchableOpacity,
+  Image, Modal,
+  TouchableWithoutFeedback
+} from "react-native";
 import Icon from 'react-native-vector-icons/AntDesign'
 import Octicon from 'react-native-vector-icons/Octicons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -8,13 +13,14 @@ import IconFont from 'react-native-vector-icons/FontAwesome'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import SeePost from './SeePost';
 
 export default function Item({ item, i }) {
   const navigation = useNavigation()
   const [like, setLike] = useState(true)
   const [color, setColor] = useState('#777777')
   const [modal, setModal] = useState(false)
-
+  const [visible, setVisible] = useState(false)
   useEffect(() => {
 
   }, [])
@@ -34,6 +40,7 @@ export default function Item({ item, i }) {
     })
   }
   const goCommet = () => {
+    setVisible(false)
     navigation.navigate('CommentPost', {
       avatar: item.avatar,
       name: item.username,
@@ -54,6 +61,10 @@ export default function Item({ item, i }) {
         transparent={true}
         visible={modal}
       >
+        < TouchableWithoutFeedback
+          onPress={() => setModal(!modal)} >
+          <View style={{ flex: 3 }}></View>
+        </ TouchableWithoutFeedback >
         <View style={styles.modal}>
           <TouchableOpacity
             style={{ alignItems: 'center' }}
@@ -139,12 +150,67 @@ export default function Item({ item, i }) {
       <View >
         <Text style={styles.post}>{item.post}</Text>
       </View>
-      {item.imagePost ?
-        <View style={styles.image}>
-          <Image style={styles.imagePost} source={{ uri: item.imagePost }} />
+
+      <TouchableOpacity onPress={() => (setVisible(!visible))}>
+        {item.imagePost ?
+          <View style={styles.image}>
+            <Image style={styles.imagePost} source={{ uri: item.imagePost }} />
+          </View>
+          : null
+        }
+      </TouchableOpacity>
+
+      {/* modal xem post */}
+
+      <Modal
+        transparent={true}
+        visible={visible}
+      >
+        <View style={{ flex: 1, backgroundColor: '#FFC0CB' }}>
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.iconModal}
+              onPress={() => setVisible(!visible)}
+            >
+              <Icon name="close" size={30} />
+            </TouchableOpacity>
+          </View>
+          <Image style={styles.imageModal} source={{ uri: item.imagePost }} />
+          <View style={styles.mdseePost}>
+            <View style={{ height: "13%"}}>
+            <View style={{ marginLeft: 20, flexDirection: 'column' }}>
+              <Text style={{ fontSize: 22 }}>{item.username}</Text>
+            </View>
+            <View style={styles.total}>
+              <View style={styles.totallike}>
+                <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
+                <Text style={{ fontSize: 18, marginLeft: 5 }}>{item.totalLike}</Text>
+              </View>
+              <View style={styles.totalComment}>
+                <Text style={{ fontSize: 18 }}>{item.comments ? item.comments.length : "0"} bình luận</Text>
+              </View>
+            </View>
+            <View style={styles.postBottom}>
+              <TouchableOpacity onPress={onChange}>
+                <View style={styles.like}>
+                  <Icon style={styles.icon} name="like1" size={30} style={{ color: color }} />
+                  <Text style={{ fontSize: 17, marginLeft: 10, color: color }}>Thích</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={goCommet}
+              >
+                <View style={styles.like}>
+                  <Octicon style={styles.icon} name="comment" size={30} />
+                  <Text style={{ fontSize: 17, marginLeft: 10, color: "#777777" }}>Bình luận</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+            </View>
+          </View>
         </View>
-        : null
-      }
+
+      </Modal>
+      {/* end modal */}
       <View style={styles.total}>
         <View style={styles.totallike}>
           <Icon style={styles.icon} name="like2" size={30} color="#f1538e" />
@@ -221,13 +287,14 @@ const styles = StyleSheet.create({
   totallike: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingLeft: 20
   },
   totalComment: {
     flex: 1,
     alignItems: 'flex-end',
     justifyContent: "center",
-    marginRight: 20
+    marginRight: 70
   },
   post: {
     padding: 20,
@@ -260,12 +327,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   modal: {
-    marginTop: 400,
     padding: 20,
     backgroundColor: '#F8F8FF',
-    height: "68%",
+    flex: 2,
     borderTopLeftRadius: 30,
-    borderTopRightRadius: 30
+    borderTopRightRadius: 30,
+    borderWidth: 2
   },
   listModal: {
     flexDirection: "row",
@@ -283,5 +350,27 @@ const styles = StyleSheet.create({
   },
   text01: {
     fontSize: 20,
-  }
+  },
+  imageModal: {
+    height: "85%",
+    width: "100%",
+    resizeMode: 'contain',
+    flexDirection: 'row',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 5
+  },
+  iconModal: {
+    marginLeft: 10,
+    backgroundColor: '#E8E8E8',
+    borderRadius: 15
+  },
+  mdseePost:{
+    height:"98%",
+    position: 'absolute',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
 });

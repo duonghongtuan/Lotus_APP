@@ -11,10 +11,10 @@ export default function Menu() {
         async function fetchData() {
             let array = await AsyncStorage.getItem('DATA')
             let DATA = JSON.parse(array);
-            let phone = await AsyncStorage.getItem('phonenumber')
+            let id = await AsyncStorage.getItem('id')
             var tempData = [];
             for (var index = 0; index < DATA.length; index++) {
-                if (DATA[index].phonenumber == phone) {
+                if (DATA[index].id == id) {
                     tempData.push(DATA[index]);
                 }
             }

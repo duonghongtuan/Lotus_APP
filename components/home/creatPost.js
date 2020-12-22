@@ -3,8 +3,8 @@ import {
     Text, View, StyleSheet, Image, TextInput,
     TouchableOpacity,
     Modal,
-    TouchableHighlight
-
+    TouchableHighlight,
+    TouchableWithoutFeedback
 } from 'react-native'
 import pick from '../api/picker.js'
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -30,13 +30,13 @@ export default class CreatePost extends Component {
         console.log(this.state.avatarSource)
         let img = this.state.avatarSource == null ? null :
             <Image
-            source={{uri:this.state.avatarSource}}
+                source={{ uri: this.state.avatarSource }}
                 style={{ height: 300, width: 400 }}
                 resizeMode="contain"
             />
         return (
             <View style={styles.container}>
-                <UserPost image={this.state.avatarSource}/>
+                <UserPost image={this.state.avatarSource} />
                 <View style={{ alignItems: "center", marginTop: 40 }}>
                     {img}
                 </View>
@@ -45,8 +45,12 @@ export default class CreatePost extends Component {
                         transparent={true}
                         visible={this.state.modalVisible}
                     >
+                        < TouchableWithoutFeedback
+                            onPress={() => this.setState({ modalVisible: false })} >
+                            <View style={{ flex: 1 }}></View>
+                        </ TouchableWithoutFeedback >
                         <View style={{ flex: 1 }}>
-                            <View style={{ marginTop: 400, padding: 20, backgroundColor: '#ffff', height: 210 }}>
+                            <View style={styles.modal}>
                                 <TouchableOpacity
                                     style={{ alignItems: 'center' }}
                                     onPress={() => {
@@ -133,5 +137,11 @@ const styles = StyleSheet.create({
         borderTopColor: '#f1538e',
         borderWidth: 1,
         backgroundColor: '#ffff'
+    },
+    modal: {
+        //marginTop: 400, 
+        padding: 20,
+        backgroundColor: '#ffff',
+        height: 210,
     }
 });
