@@ -31,10 +31,10 @@ export default class OneNotification extends Component {
                 </ListItem>
                 <ListItem avatar>
                     <Left>
-                        <Thumbnail source={avatarCat1} />
+                        <Thumbnail source={avatarCat2} />
                     </Left>
                     <Body>
-                        <Text>Lotus vừa bình luận vào bài viết của bạn</Text>
+                        <Text>Cat vừa bình luận vào bài viết của bạn</Text>
                         <Text note>Doing what you like will always keep you happy . .</Text>
                     </Body>
                     <Right>
