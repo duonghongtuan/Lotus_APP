@@ -59,7 +59,7 @@ export default function FriendProfile() {
                 </View>
             </View>
             <View style={{ marginLeft: 20, marginBottom: 10 }}>
-                <Text style={{ fontSize: 18, color: '#888888' }}>399 người bạn</Text>
+                <Text style={{ fontSize: 18, color: '#888888' }}>{DATA.length} người bạn</Text>
             </View>
             <View style={styles.listFriend}>
                 {array1.map((item, index) => (
